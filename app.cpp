@@ -8,23 +8,29 @@ using namespace ev3api;
 ColorSensor	gColorSensor(PORT_2);
 //GyroSensor	gGyroSensor(PORT_4);
 TouchSensor gTouchSensor(PORT_1);
+SonarSensor	gSonarSensor(PORT_3);
 Motor				gLeftWheel(PORT_C);
 Motor				gRightWheel(PORT_B);
+Motor				gTailWheel(PORT_D);
 
 /* インスタンスの作成 */
 static Controler *gControler;
 static Starter *gStarter;
+static ObjectDetection *gObjectDetection;
 static Tracer *gTracer;
 
 static void user_system_create() {
 	tslp_tsk(2);
 
 	gStarter = new Starter(gTouchSensor);
+	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTracer = new Tracer(gColorSensor, 
 											 gLeftWheel, 
-											 gRightWheel);
+											 gRightWheel,
+											 gTailWheel);
 	gControler = new Controler(gTracer,
-														 gStarter);
+														 gStarter,
+														 gObjectDetection);
 
 	ev3_led_set_color(LED_ORANGE);
 }
@@ -32,8 +38,10 @@ static void user_system_create() {
 static void user_system_destroy() {
 	gLeftWheel.reset();
 	gRightWheel.reset();
+	gTailWheel.reset();
 
 	delete gStarter;
+	delete gObjectDetection;
 	delete gTracer;
 	delete gControler;
 }

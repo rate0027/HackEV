@@ -11,7 +11,8 @@ class Tracer {
 public:
   explicit Tracer(const ColorSensor& colorSensor,
 				 Motor& leftWheel,
-				 Motor& rightWheel);
+				 Motor& rightWheel,
+				 Motor& tailWheel);
   void run();
   void init();
   void terminate();
@@ -19,6 +20,7 @@ public:
 private:
 	Motor& mLeftWheel;
 	Motor& mRightWheel;
+	Motor& mTailWheel;
 	const ColorSensor& mColorSensor;
   const int8_t mThreshold = 21;
   const int8_t pwm = (Motor::PWM_MAX) / 6;

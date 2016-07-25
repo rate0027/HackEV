@@ -3,6 +3,7 @@
 
 #include "Tracer.h"
 #include "Starter.h"
+#include "ObjectDetection.h"
 #include "util.h"
 #include "Clock.h"
 
@@ -14,7 +15,8 @@ public:
   /* publicメソッドの宣言
 	 * メソッドの詳細はcppを参照 */
 	Controler(Tracer* tracer,
-			const Starter* starter);
+			const Starter* starter,
+			ObjectDetection* objectDetection);
 	void init();
 	void terminate();
 	void run();
@@ -25,13 +27,15 @@ private:
 	enum State{
 		UNDEFINED,
 		WAITING_FOR_START,
-		WARKING
+		WARKING,
+		OBJECT_DETECTION
 	};
 	
 	Clock clock;
 
 	Tracer* mTracer;
 	const Starter* mStarter;
+	ObjectDetection* mObjectDetection;
 	State mState;
 
 };

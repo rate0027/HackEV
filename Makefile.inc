@@ -6,7 +6,8 @@ APPL_CXXOBJS += \
 util.o \
 Controler.o \
 Tracer.o \
-Starter.o 
+Starter.o \
+ObjectDetection.o 
 
 SRCLANG := c++
 

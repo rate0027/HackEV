@@ -2,9 +2,11 @@
 
 Tracer::Tracer(const ColorSensor& colorSensor,
 							 Motor& leftWheel,
-							 Motor& rightWheel)
+							 Motor& rightWheel,
+							 Motor& tailWheel)
 	: mLeftWheel(leftWheel), 
 	  mRightWheel(rightWheel),
+		mTailWheel(tailWheel),
     mColorSensor(colorSensor) {
 }
 
@@ -26,6 +28,7 @@ void Tracer::run() {
 	float turn = Kp * diff + bias;
 	mLeftWheel.setPWM(pwm - turn);
 	mRightWheel.setPWM(pwm + turn);
+	mTailWheel.setPWM(turn*10);
 }
 
 

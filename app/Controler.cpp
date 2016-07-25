@@ -2,9 +2,11 @@
 
 /* コンストラクタ */
 Controler::Controler(Tracer* tracer,
-										 const Starter* starter)
+										 const Starter* starter,
+										 ObjectDetection* objectDetection)
 	: mTracer(tracer),
 	  mStarter(starter),
+		mObjectDetection(objectDetection),
 		mState(UNDEFINED) {
 }
 
@@ -31,8 +33,20 @@ void Controler::run() {
 			ev3_led_set_color(LED_ORANGE);
 			break;
 		case WARKING:
-			msg_f("running...", 1);		
-			mTracer->run();
+			if (mObjectDetection->isPressed() <= 10){
+				mState = OBJECT_DETECTION;
+			} else {
+				msg_f("running...", 1);		
+				mTracer->run();
+			}
+			break;
+		case OBJECT_DETECTION:
+			if (mObjectDetection->isPressed() >= 11) {
+				mState = WARKING;
+			}else {
+				msg_f("object_detection", 1);
+				mTracer->terminate();
+			}
 			break;
 		default:
 			break;
