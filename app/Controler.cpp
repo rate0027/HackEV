@@ -32,7 +32,7 @@ void Controler::run() {
 			}
 			ev3_led_set_color(LED_ORANGE);
 			break;
-		case WARKING:
+		case WALKING:
 			if (mObjectDetection->isPressed() <= 10){
 				mState = OBJECT_DETECTION;
 			} else {

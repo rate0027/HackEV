@@ -27,7 +27,7 @@ private:
 	enum State{
 		UNDEFINED,
 		WAITING_FOR_START,
-		WARKING,
+		WALKING,
 		OBJECT_DETECTION
 	};
 	
