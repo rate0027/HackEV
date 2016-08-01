@@ -2,7 +2,7 @@
 #define EV3_APP_CONTROLER_H_
 
 #include "Tracer.h"
-#include "Starter.h"
+#include "Prelude.h"
 #include "ObjectDetection.h"
 #include "util.h"
 #include "Clock.h"
@@ -15,7 +15,7 @@ public:
   /* publicメソッドの宣言
 	 * メソッドの詳細はcppを参照 */
 	Controler(Tracer* tracer,
-			const Starter* starter,
+			Prelude* prelude,
 			ObjectDetection* objectDetection);
 	void init();
 	void terminate();
@@ -34,7 +34,7 @@ private:
 	Clock clock;
 
 	Tracer* mTracer;
-	const Starter* mStarter;
+	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
 	State mState;
 
