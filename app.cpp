@@ -15,21 +15,24 @@ Motor				gTailWheel(PORT_D);
 
 /* インスタンスの作成 */
 static Controler *gControler;
-static Starter *gStarter;
+static Prelude *gPrelude;
+static ColorControl *gColorControl;
 static ObjectDetection *gObjectDetection;
 static Tracer *gTracer;
 
 static void user_system_create() {
 	tslp_tsk(2);
 
-	gStarter = new Starter(gTouchSensor);
+	gPrelude = new Prelude(gTouchSensor,
+												 gColorControl);
+	gColorControl = new ColorControl(gColorSensor);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
-	gTracer = new Tracer(gColorSensor, 
+	gTracer = new Tracer(gColorControl, 
 											 gLeftWheel, 
 											 gRightWheel,
 											 gTailWheel);
 	gControler = new Controler(gTracer,
-														 gStarter,
+														 gPrelude,
 														 gObjectDetection);
 
 	ev3_led_set_color(LED_ORANGE);
@@ -40,7 +43,8 @@ static void user_system_destroy() {
 	gRightWheel.reset();
 	gTailWheel.reset();
 
-	delete gStarter;
+	delete gPrelude;
+	delete gColorControl;
 	delete gObjectDetection;
 	delete gTracer;
 	delete gControler;

@@ -2,10 +2,10 @@
 
 /* コンストラクタ */
 Controler::Controler(Tracer* tracer,
-										 const Starter* starter,
+										 Prelude* prelude,
 										 ObjectDetection* objectDetection)
 	: mTracer(tracer),
-	  mStarter(starter),
+	  mPrelude(prelude),
 		mObjectDetection(objectDetection),
 		mState(UNDEFINED) {
 }
@@ -23,12 +23,13 @@ void Controler::terminate() {
 void Controler::run() {
 	switch(mState) {
 		case UNDEFINED:
+			mPrelude->calibration();
 			mState = WAITING_FOR_START;
 		  break;
 		case WAITING_FOR_START:	
 			msg_f("waiting", 1);		
- 			if (mStarter->isPressed()) {
-				mState = WARKING;
+ 			if (mPrelude->isPressed()) {
+				mState = WALKING;
 			}
 			ev3_led_set_color(LED_ORANGE);
 			break;
@@ -42,7 +43,7 @@ void Controler::run() {
 			break;
 		case OBJECT_DETECTION:
 			if (mObjectDetection->isPressed() >= 11) {
-				mState = WARKING;
+				mState = WALKING;
 			}else {
 				msg_f("object_detection", 1);
 				mTracer->terminate();
