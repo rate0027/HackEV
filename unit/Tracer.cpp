@@ -18,10 +18,10 @@ void Tracer::terminate() {
   mRightWheel.stop();
 }
 
-void Tracer::run() {
+void Tracer::run(int target) {
 
 	const float Kp = 0.83; /* 0.63 */
-	int target = mColorControl->getTarget();
+	//int target = 20;
 	const int bias = 0;
 
 	int diff = mColorControl->getBright() - target;

@@ -37,6 +37,7 @@ private:
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
 	State mState;
+	int TARGET = 0;
 
 };
 

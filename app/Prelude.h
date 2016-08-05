@@ -3,7 +3,7 @@
 
 /* センサを使う場合はincludeが必要*/
 #include "TouchSensor.h"
-#include "ColorControl.h"
+#include "ColorSensor.h"
 #include "util.h"
 
 using namespace ev3api;
@@ -12,19 +12,22 @@ using namespace ev3api;
 class Prelude {
 public:
   explicit Prelude(const TouchSensor& touchSensor,
-			ColorControl* colorControl);
+			const ColorSensor& colorSensor);
 	bool isPressed() const;
-	void calibration() ;
+	int calibration() ;
 
 private:
   enum State {
-    black,
-		white
+    BLACK,
+		WHITE,
+		COMPLETE
 	};
 
 	const TouchSensor& mTouchSensor;
-	ColorControl* mColorControl;
+	const ColorSensor& mColorSensor;
 	State mState;
+	int8_t black, white = 0;
+	int target = 0;
 };
 
 
