@@ -3,9 +3,9 @@
 /* コンストラクタ */
 /* センサ類を扱う場合はポートの宣言が必要 */
 Prelude::Prelude(const TouchSensor& touchSensor,
-		const ColorSensor& colorSensor)
+		ColorControl* colorControl)
 	: mTouchSensor(touchSensor), 
-		mColorSensor(colorSensor),
+		mColorControl(colorControl),
 		mState(BLACK) {
 }
 
@@ -19,16 +19,16 @@ int Prelude::calibration() {
 	  case BLACK:
 		  tslp_tsk(100);
 	    msg_f("caribration:black", 1);		
-	    if (mTouchSensor.isPressed()) {
-        black = mColorSensor.getBrightness();
+	    if (isPressed()) {
+        black = mColorControl->getBright();
 		    mState = WHITE;
 	    }
 	    break;
 	  case WHITE:
 	    tslp_tsk(100);
 			msg_f("caribration:white", 1);		
-			if (mTouchSensor.isPressed()) {
-				white = mColorSensor.getBrightness();
+			if (isPressed()) {
+				white = mColorControl->getBright();
 				mState = COMPLETE;
 			}
 			break;

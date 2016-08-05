@@ -23,8 +23,9 @@ void Controler::terminate() {
 void Controler::run() {
 	switch(mState) {
 		case UNDEFINED:
-			mPrelude->calibration();
-			mState = WAITING_FOR_START;
+			if( (TARGET = mPrelude->calibration()) > 0 ) {
+			  mState = WAITING_FOR_START;
+			}
 		  break;
 		case WAITING_FOR_START:	
 			msg_f("waiting", 1);		
@@ -38,7 +39,7 @@ void Controler::run() {
 				mState = OBJECT_DETECTION;
 			} else {
 				msg_f("running...", 1);		
-				mTracer->run();
+				mTracer->run(TARGET);
 			}
 			break;
 		case OBJECT_DETECTION:

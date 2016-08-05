@@ -24,7 +24,7 @@ static void user_system_create() {
 	tslp_tsk(2);
 
 	gPrelude = new Prelude(gTouchSensor,
-												 gColorControl);
+												 gColorSensor);
 	gColorControl = new ColorControl(gColorSensor);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTracer = new Tracer(gColorControl, 

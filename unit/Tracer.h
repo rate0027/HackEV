@@ -13,7 +13,7 @@ public:
 				 Motor& leftWheel,
 				 Motor& rightWheel,
 				 Motor& tailWheel);
-  void run();
+  void run(int );
   void init();
   void terminate();
 
