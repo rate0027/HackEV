@@ -6,6 +6,7 @@
 #include "ObjectDetection.h"
 #include "util.h"
 #include "Clock.h"
+#include "ColorJudge.h"
 
 
 /* クラスの宣言 */
@@ -16,7 +17,8 @@ public:
 	 * メソッドの詳細はcppを参照 */
 	Controler(Tracer* tracer,
 			Prelude* prelude,
-			ObjectDetection* objectDetection);
+			ObjectDetection* objectDetection,
+			ColorJudge* colorJudge);
 	void init();
 	void terminate();
 	void run();
@@ -28,7 +30,9 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
-		OBJECT_DETECTION
+		OBJECT_DETECTION,
+		STOP,
+		JUDGE_RED
 	};
 	
 	Clock clock;
@@ -36,6 +40,7 @@ private:
 	Tracer* mTracer;
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
+	ColorJudge* mColorJudge;
 	State mState;
 	int TARGET = 0;
 

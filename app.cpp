@@ -17,6 +17,7 @@ Motor				gTailWheel(PORT_D);
 static Controler *gControler;
 static Prelude *gPrelude;
 static ColorControl *gColorControl;
+static ColorJudge *gColorJudge;
 static ObjectDetection *gObjectDetection;
 static Tracer *gTracer;
 
@@ -26,6 +27,7 @@ static void user_system_create() {
 	gPrelude = new Prelude(gTouchSensor,
 												 gColorSensor);
 	gColorControl = new ColorControl(gColorSensor);
+	gColorJudge = new ColorJudge(gColorSensor);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTracer = new Tracer(gColorControl, 
 											 gLeftWheel, 
@@ -33,7 +35,8 @@ static void user_system_create() {
 											 gTailWheel);
 	gControler = new Controler(gTracer,
 														 gPrelude,
-														 gObjectDetection);
+														 gObjectDetection,
+														 gColorJudge);
 
 	ev3_led_set_color(LED_ORANGE);
 }
@@ -45,6 +48,7 @@ static void user_system_destroy() {
 
 	delete gPrelude;
 	delete gColorControl;
+	delete gColorJudge;
 	delete gObjectDetection;
 	delete gTracer;
 	delete gControler;
