@@ -17,7 +17,7 @@ bool Prelude::isPressed() const{
 int Prelude::calibration() {
   switch(mState){
 	  case BLACK:
-		  tslp_tsk(100);
+		  tslp_tsk(200);
 	    msg_f("caribration:black", 1);		
 	    if (mTouchSensor.isPressed()) {
         black = mColorSensor.getBrightness();
@@ -25,7 +25,7 @@ int Prelude::calibration() {
 	    }
 	    break;
 	  case WHITE:
-	    tslp_tsk(100);
+	    tslp_tsk(200);
 			msg_f("caribration:white", 1);		
 			if (mTouchSensor.isPressed()) {
 				white = mColorSensor.getBrightness();
@@ -33,6 +33,7 @@ int Prelude::calibration() {
 			}
 			break;
 		case COMPLETE:
+	    tslp_tsk(200);
 			target = (black + white)/2;
 			break;
 		default:
