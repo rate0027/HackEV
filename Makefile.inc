@@ -8,7 +8,8 @@ Controler.o \
 Tracer.o \
 Prelude.o \
 ObjectDetection.o \
-ColorControl.o
+ColorControl.o \
+ColorJudge.o
 
 SRCLANG := c++
 
