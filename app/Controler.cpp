@@ -4,10 +4,12 @@
 Controler::Controler(Tracer* tracer,
 										 Prelude* prelude,
 										 ObjectDetection* objectDetection,
+										 TimeDetection* timeDetection,
 										 ColorJudge* colorJudge)
 	: mTracer(tracer),
 	  mPrelude(prelude),
 		mObjectDetection(objectDetection),
+		mTimeDetection(timeDetection),
 		mColorJudge(colorJudge),
 		mState(UNDEFINED) {
 }
@@ -43,9 +45,11 @@ void Controler::run() {
 				msg_f("running...", 1);		
 				mTracer->run(TARGET);
 
+
 			if (mColorJudge->judgeRED() == 1){
 				mState = STOP;
 			}
+
 			}
 			break;
 		case OBJECT_DETECTION:
@@ -57,6 +61,7 @@ void Controler::run() {
 			}
 			break;
 		case STOP:
+			msg_f("STOP", 1);
 			mTracer->terminate();
 			break;
 		default:

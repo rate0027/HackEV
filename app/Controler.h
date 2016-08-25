@@ -4,8 +4,8 @@
 #include "Tracer.h"
 #include "Prelude.h"
 #include "ObjectDetection.h"
+#include "TimeDetection.h"
 #include "util.h"
-#include "Clock.h"
 #include "ColorJudge.h"
 
 
@@ -18,6 +18,7 @@ public:
 	Controler(Tracer* tracer,
 			Prelude* prelude,
 			ObjectDetection* objectDetection,
+			TimeDetection* timeDetection,
 			ColorJudge* colorJudge);
 	void init();
 	void terminate();
@@ -35,11 +36,10 @@ private:
 		JUDGE_RED
 	};
 	
-	Clock clock;
-
 	Tracer* mTracer;
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
+	TimeDetection* mTimeDetection;
 	ColorJudge* mColorJudge;
 	State mState;
 	int TARGET = 0;
