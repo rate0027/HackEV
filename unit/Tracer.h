@@ -12,7 +12,8 @@ public:
   explicit Tracer(const ColorControl* colorControl,
 				 Motor& leftWheel,
 				 Motor& rightWheel,
-				 Motor& tailWheel);
+				 Motor& tailWheel,
+                 Motor& arm);
   void run(int );
   void init();
   void terminate();
@@ -22,6 +23,7 @@ private:
 	Motor& mLeftWheel;
 	Motor& mRightWheel;
 	Motor& mTailWheel;
+    Motor& mArm;
   const int8_t mThreshold = 21;
   const int8_t pwm = (Motor::PWM_MAX) / 6;
 };

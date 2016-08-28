@@ -9,8 +9,9 @@ Tracer.o \
 Prelude.o \
 ObjectDetection.o \
 ColorControl.o \
-ColorJudge.o \
-TimeDetection.o
+distance.o \
+Ar.o \
+ColorJudge.o
 
 SRCLANG := c++
 
