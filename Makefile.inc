@@ -10,8 +10,8 @@ Prelude.o \
 ObjectDetection.o \
 TimeDetection.o \
 ColorJudge.o \
-distance.o \
-Ar.o 
+Ar.o \ 
+HitDetection.o 
 
 SRCLANG := c++
 
