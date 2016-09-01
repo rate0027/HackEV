@@ -4,12 +4,12 @@ Tracer::Tracer(const ColorControl* colorControl,
 							 Motor& leftWheel,
 							 Motor& rightWheel,
 							 Motor& tailWheel,
-                             Motor& arm)
+               Motor& arm)
 	: mColorControl(colorControl),
 		mLeftWheel(leftWheel), 
 	  mRightWheel(rightWheel),
 		mTailWheel(tailWheel),
-      mArm(arm){
+    mArm(arm){
 }
 
 void Tracer::init() {
@@ -45,8 +45,8 @@ void Tracer::run(int target) {
 	d = Kd * (diff[1] - diff[0]) / 0.004;
 	float turn = p+i+d;
 
-	//mLeftWheel.setPWM(pwm - turn);
-	//mRightWheel.setPWM(pwm + turn);
+	mLeftWheel.setPWM(pwm - turn);
+	mRightWheel.setPWM(pwm + turn);
 	//mTailWheel.setPWM(turn*10);
 }
 
