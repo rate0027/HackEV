@@ -4,11 +4,11 @@
 #include "Tracer.h"
 #include "Prelude.h"
 #include "ObjectDetection.h"
-#include "TimeDetection.h"
 #include "util.h"
+#include "Clock.h"
 #include "ColorJudge.h"
-
-
+#include "distance.h"
+#include "Ar.h"
 /* クラスの宣言 */
 class Controler {
 /* 外から触れる部分を記述 */
@@ -18,8 +18,9 @@ public:
 	Controler(Tracer* tracer,
 			Prelude* prelude,
 			ObjectDetection* objectDetection,
-			TimeDetection* timeDetection,
-			ColorJudge* colorJudge);
+			ColorJudge* colorJudge,
+            distance* distance,
+            Ar* ar);
 	void init();
 	void terminate();
 	void run();
@@ -33,14 +34,23 @@ private:
 		WALKING,
 		OBJECT_DETECTION,
 		STOP,
+        BACK,
+        ARUP,
+        ARDOWN,
+        MOVE,
+        MOVEL,
+        MOVER,
 		JUDGE_RED
 	};
 	
+	Clock clock;
+
 	Tracer* mTracer;
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
-	TimeDetection* mTimeDetection;
 	ColorJudge* mColorJudge;
+    distance* mdistance;
+    Ar* mAr;
 	State mState;
 	int TARGET = 0;
 

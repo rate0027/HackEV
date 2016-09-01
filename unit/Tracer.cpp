@@ -3,11 +3,13 @@
 Tracer::Tracer(const ColorControl* colorControl,
 							 Motor& leftWheel,
 							 Motor& rightWheel,
-							 Motor& tailWheel)
+							 Motor& tailWheel,
+                             Motor& arm)
 	: mColorControl(colorControl),
 		mLeftWheel(leftWheel), 
 	  mRightWheel(rightWheel),
-		mTailWheel(tailWheel) {
+		mTailWheel(tailWheel),
+      mArm(arm){
 }
 
 void Tracer::init() {
@@ -16,7 +18,9 @@ void Tracer::init() {
 void Tracer::terminate() {
   mLeftWheel.stop();
   mRightWheel.stop();
+  mArm.stop();
 }
+
 
 void Tracer::run(int target) {
 
@@ -35,14 +39,14 @@ void Tracer::run(int target) {
 	int diff[2];
 	diff[1] = mColorControl->getBright() - target;
 	diff[0] = diff[1];
-	integral += (diff[1] + diff[0]) / 2.0 * 0.004;
+	integral += (diff[1] + diff[0])/ 2.0 * 0.004;
 	p = Kp * diff[1] + bias;
 	i = Ki * integral;
 	d = Kd * (diff[1] - diff[0]) / 0.004;
 	float turn = p+i+d;
 
-	mLeftWheel.setPWM(pwm - turn);
-	mRightWheel.setPWM(pwm + turn);
+	//mLeftWheel.setPWM(pwm - turn);
+	//mRightWheel.setPWM(pwm + turn);
 	//mTailWheel.setPWM(turn*10);
 }
 

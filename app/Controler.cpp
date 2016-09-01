@@ -4,14 +4,16 @@
 Controler::Controler(Tracer* tracer,
 										 Prelude* prelude,
 										 ObjectDetection* objectDetection,
-										 TimeDetection* timeDetection,
-										 ColorJudge* colorJudge)
+										 ColorJudge* colorJudge,
+                                         distance* distance,
+                     Ar* ar)
 	: mTracer(tracer),
 	  mPrelude(prelude),
 		mObjectDetection(objectDetection),
-		mTimeDetection(timeDetection),
 		mColorJudge(colorJudge),
-		mState(UNDEFINED) {
+        mdistance(distance),
+        mAr(ar),
+        mState(UNDEFINED){
 }
 
 void Controler::init() {
@@ -42,15 +44,16 @@ void Controler::run() {
 			if (mObjectDetection->isPressed() <= 10){
 				mState = OBJECT_DETECTION;
 			} else {
-				msg_f("running...", 1);		
+				msg_f("running...", 1);
 				mTracer->run(TARGET);
-
 
 			if (mColorJudge->judgeRED() == 1){
 				mState = STOP;
 			}
-
 			}
+            if (mdistance->move() >= 1) {
+                mState = BACK;
+            }
 			break;
 		case OBJECT_DETECTION:
 			if (mObjectDetection->isPressed() >= 11) {
@@ -61,10 +64,14 @@ void Controler::run() {
 			}
 			break;
 		case STOP:
-			msg_f("STOP", 1);
-			mTracer->terminate();
-			break;
-		default:
+                    mTracer->terminate();
+            break;
+        case BACK:
+            if (mdistance->back() >= 1) {
+                mState = STOP;
+            }
+            break;
+        default:
 			break;
 	}
 	
