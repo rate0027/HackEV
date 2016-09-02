@@ -9,31 +9,45 @@ ColorSensor	gColorSensor(PORT_2);
 //GyroSensor	gGyroSensor(PORT_4);
 TouchSensor gTouchSensor(PORT_1);
 SonarSensor	gSonarSensor(PORT_3);
-Motor				gLeftWheel(PORT_C);
-Motor				gRightWheel(PORT_B);
-Motor				gTailWheel(PORT_D);
+Motor		gLeftWheel(PORT_C);
+Motor		gRightWheel(PORT_B);
+Motor		gTailWheel(PORT_D);
+Motor		gArm(PORT_A);
 
 /* インスタンスの作成 */
 static Controler *gControler;
 static Prelude *gPrelude;
-static ColorControl *gColorControl;
+static ColorJudge *gColorJudge;
 static ObjectDetection *gObjectDetection;
+static TimeDetection *gTimeDetection;
 static Tracer *gTracer;
+static distance *gdistance;
+static Ar *gAr;
+
 
 static void user_system_create() {
 	tslp_tsk(2);
 
 	gPrelude = new Prelude(gTouchSensor,
 												 gColorSensor);
-	gColorControl = new ColorControl(gColorSensor);
+	gColorJudge = new ColorJudge(gColorSensor);
+  gdistance = new distance(gLeftWheel,
+                           gRightWheel);
+  	gAr = new Ar(gArm);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
-	gTracer = new Tracer(gColorControl, 
-											 gLeftWheel, 
+	gTimeDetection = new TimeDetection();
+	gTracer = new Tracer(gColorSensor,
+											 gLeftWheel,
 											 gRightWheel,
-											 gTailWheel);
+											 gTailWheel,
+							gArm);
 	gControler = new Controler(gTracer,
 														 gPrelude,
-														 gObjectDetection);
+														 gObjectDetection,
+														 gTimeDetection,
+														 gColorJudge,
+                             gdistance,
+                             gAr);
 
 	ev3_led_set_color(LED_ORANGE);
 }
@@ -42,10 +56,14 @@ static void user_system_destroy() {
 	gLeftWheel.reset();
 	gRightWheel.reset();
 	gTailWheel.reset();
+  gArm.reset();
 
 	delete gPrelude;
-	delete gColorControl;
+	delete gColorJudge;
+  delete gdistance;
+  delete gAr;
 	delete gObjectDetection;
+	delete gTimeDetection;
 	delete gTracer;
 	delete gControler;
 }

@@ -4,8 +4,12 @@
 #include "Tracer.h"
 #include "Prelude.h"
 #include "ObjectDetection.h"
+#include "TimeDetection.h"
 #include "util.h"
 #include "Clock.h"
+#include "ColorJudge.h"
+#include "distance.h"
+#include "Ar.h"
 
 
 /* クラスの宣言 */
@@ -16,7 +20,11 @@ public:
 	 * メソッドの詳細はcppを参照 */
 	Controler(Tracer* tracer,
 			Prelude* prelude,
-			ObjectDetection* objectDetection);
+			ObjectDetection* objectDetection,
+			TimeDetection* timeDetection,
+			ColorJudge* colorJudge,
+      distance* distance,
+      Ar* ar);
 	void init();
 	void terminate();
 	void run();
@@ -28,7 +36,15 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
-		OBJECT_DETECTION
+		OBJECT_DETECTION,
+		STOP,
+    BACK,
+    ARUP,
+    ARDOWN,
+    MOVE,
+    MOVEL,
+    MOVER,
+		JUDGE_RED
 	};
 	
 	Clock clock;
@@ -36,6 +52,10 @@ private:
 	Tracer* mTracer;
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
+	TimeDetection* mTimeDetection;
+	ColorJudge* mColorJudge;
+  distance* mdistance;
+  Ar* mAr;
 	State mState;
 	int TARGET = 0;
 
