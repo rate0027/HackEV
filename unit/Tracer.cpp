@@ -1,11 +1,11 @@
 #include "Tracer.h"
 
-Tracer::Tracer(const ColorControl* colorControl,
+Tracer::Tracer(ColorSensor& colorSensor,
 							 Motor& leftWheel,
 							 Motor& rightWheel,
 							 Motor& tailWheel,
                Motor& arm)
-	: mColorControl(colorControl),
+	: mColorSensor(colorSensor),
 		mLeftWheel(leftWheel), 
 	  mRightWheel(rightWheel),
 		mTailWheel(tailWheel),
@@ -32,12 +32,12 @@ void Tracer::run(int target) {
 	float integral;
 
 /* P制御
-	int diff = mColorControl->getBright() - target;
+	int diff = mColorSensor.getBrightness() - target;
 	float turn = Kp * diff + bias;
 */
 	/* PID制御 */
 	int diff[2];
-	diff[1] = mColorControl->getBright() - target;
+	diff[1] = mColorSensor.getBrightness() - target;
 	diff[0] = diff[1];
 	integral += (diff[1] + diff[0])/ 2.0 * 0.004;
 	p = Kp * diff[1] + bias;

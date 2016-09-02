@@ -53,10 +53,6 @@ void Controler::run() {
 					mState = STOP;
 				}
 			}
-
-			if (mdistance->move() >= 1) {
-				mState = BACK;
-			}
 			break;
 		case OBJECT_DETECTION:
 			if (mObjectDetection->isPressed() >= 11) {
