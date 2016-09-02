@@ -6,7 +6,7 @@ using namespace ev3api;
 
 //Device objects
 ColorSensor	gColorSensor(PORT_2);
-//GyroSensor	gGyroSensor(PORT_4);
+GyroSensor	gGyroSensor(PORT_4);
 TouchSensor gTouchSensor(PORT_1);
 SonarSensor	gSonarSensor(PORT_3);
 Motor		gLeftWheel(PORT_C);
@@ -17,7 +17,6 @@ Motor		gArm(PORT_A);
 /* インスタンスの作成 */
 static Controler *gControler;
 static Prelude *gPrelude;
-static ColorControl *gColorControl;
 static ColorJudge *gColorJudge;
 static ObjectDetection *gObjectDetection;
 static TimeDetection *gTimeDetection;
@@ -31,18 +30,17 @@ static void user_system_create() {
 
 	gPrelude = new Prelude(gTouchSensor,
 												 gColorSensor);
-	gColorControl = new ColorControl(gColorSensor);
 	gColorJudge = new ColorJudge(gColorSensor);
   gdistance = new distance(gLeftWheel,
                            gRightWheel);
-  gAr = new Ar(gArm);
+ 	gAr = new Ar(gArm);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTimeDetection = new TimeDetection();
-	gTracer = new Tracer(gColorControl, 
+	gTracer = new Tracer(gColorSensor,
 											 gLeftWheel,
 											 gRightWheel,
 											 gTailWheel,
-                       gArm);
+					 	 					 gArm);
 	gControler = new Controler(gTracer,
 														 gPrelude,
 														 gObjectDetection,
@@ -61,7 +59,6 @@ static void user_system_destroy() {
   gArm.reset();
 
 	delete gPrelude;
-	delete gColorControl;
 	delete gColorJudge;
   delete gdistance;
   delete gAr;

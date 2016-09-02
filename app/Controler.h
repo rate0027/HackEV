@@ -39,12 +39,6 @@ private:
 		OBJECT_DETECTION,
 		STOP,
     BACK,
-    ARUP,
-    ARDOWN,
-    MOVE,
-    MOVEL,
-    MOVER,
-		JUDGE_RED
 	};
 	
 	Clock clock;
