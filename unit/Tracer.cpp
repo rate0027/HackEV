@@ -22,32 +22,45 @@ void Tracer::terminate() {
 }
 
 
+
 void Tracer::run(int target) {
-
-  const float Kp = 0.63; /* 0.63 */
-	const float Ki = 0.30;
-  const float Kd = 0.026;
-	const int bias = 0;
-  int p,i,d;
-	float integral;
-
-/* P制御
-	int diff = mColorSensor.getBrightness() - target;
-	float turn = Kp * diff + bias;
-*/
-	/* PID制御 */
-	int diff[2];
-	diff[1] = mColorSensor.getBrightness() - target;
-	diff[0] = diff[1];
-	integral += (diff[1] + diff[0])/ 2.0 * 0.004;
-	p = Kp * diff[1] + bias;
-	i = Ki * integral;
-	d = Kd * (diff[1] - diff[0]) / 0.004;
-	float turn = p+i+d;
-
-	mLeftWheel.setPWM(pwm - turn);
-	mRightWheel.setPWM(pwm + turn);
-	//mTailWheel.setPWM(turn*10);
+    const float Kp = 0.6; /* 0.63 */
+    const float Ki = 0.3;
+    const float Kd = 0.525; /*0.125*/
+    const int bias = 0;
+    int p,i,d;
+    float integral;
+    
+    int diff[2];
+    diff[0] = diff[1];
+    diff[1] = mColorSensor.getBrightness() - target;
+    integral += (diff[1] + diff[0]) / 2.0 * 0.004;
+    p = Kp * diff[1] + bias;
+    i = Ki * integral;
+    d = Kd * (diff[1] - diff[0]) / 0.004;
+    float turn = p+i+d;
+    int ipwmR = pwm;
+    int ipwmL = pwm;
+    //    mLeftWheel.setPWM(pwm - turn);
+    //    mRightWheel.setPWM(pwm + turn);
+    
+    /*
+     int diff = mColorControl->getBrightness() - target;
+     float turn = Kp * diff + bias;
+     */
+    
+    if(turn > 0){
+        ipwmR = (pwm);
+        ipwmL = ((pwm+3) - turn);
+    }
+    else if(turn < 0){
+        ipwmL = (pwm+3);
+        ipwmR = (pwm + turn);
+    }
+    mLeftWheel.setPWM(ipwmL);
+    mRightWheel.setPWM(ipwmR);
+    
+    mTailWheel.setPWM(turn*5);
 }
 
 
