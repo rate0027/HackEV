@@ -25,7 +25,8 @@ private:
 	Motor& mTailWheel;
   Motor& mArm;
   const int8_t mThreshold = 21;
-  const int8_t pwm = (Motor::PWM_MAX) / 6;
+  //const int8_t pwm = (Motor::PWM_MAX) / 6;
+  const int8_t pwm = 10;
 };
 
 

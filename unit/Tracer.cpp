@@ -24,9 +24,9 @@ void Tracer::terminate() {
 
 
 void Tracer::run(int target) {
-    const float Kp = 0.6; /* 0.63 */
+    const float Kp = 0.5; /* 0.63 */
     const float Ki = 0.3;
-    const float Kd = 0.525; /*0.125*/
+    const float Kd = 0.125; /*0.125*/
     const int bias = 0;
     int p,i,d;
     float integral;
@@ -34,10 +34,10 @@ void Tracer::run(int target) {
     int diff[2];
     diff[0] = diff[1];
     diff[1] = mColorSensor.getBrightness() - target;
-    integral += (diff[1] + diff[0]) / 2.0 * 0.004;
+    integral += (diff[1] + diff[0]) / 2.0;
     p = Kp * diff[1] + bias;
     i = Ki * integral;
-    d = Kd * (diff[1] - diff[0]) / 0.004;
+    d = Kd * (diff[1] - diff[0]);
     float turn = p+i+d;
     int ipwmR = pwm;
     int ipwmL = pwm;
@@ -51,16 +51,16 @@ void Tracer::run(int target) {
     
     if(turn > 0){
         ipwmR = (pwm);
-        ipwmL = ((pwm+3) - turn);
+        ipwmL = ((pwm+2) - turn);
     }
     else if(turn < 0){
-        ipwmL = (pwm+3);
+        ipwmL = (pwm+2);
         ipwmR = (pwm + turn);
     }
     mLeftWheel.setPWM(ipwmL);
     mRightWheel.setPWM(ipwmR);
     
-    mTailWheel.setPWM(turn*5);
+    mTailWheel.setPWM(turn*3);
 }
 
 
