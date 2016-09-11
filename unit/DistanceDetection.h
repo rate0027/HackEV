@@ -10,14 +10,15 @@ using namespace ev3api;
 class DistanceDetection {
 public:
   explicit DistanceDetection(Motor& leftWheel,
-				 Motor& rightWheel);
-	bool left(int);
-	bool right(int);
-
+				 Motor& rightWheel,
+				 Motor& tailWheel,
+				 Motor& arm);
+	bool test(int);
 private:
 	Motor& mLeftWheel;
 	Motor& mRightWheel;
-	//Motor& mTailWheel;
+	Motor& mTailWheel;
+	Motor& mArm;
 };
 
 

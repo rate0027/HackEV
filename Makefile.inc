@@ -12,6 +12,7 @@ TimeDetection.o \
 ColorJudge.o \
 Ar.o \
 HitDetection.o \
+DistanceDetection.o \
 
 SRCLANG := c++
 

@@ -21,6 +21,7 @@ static ColorJudge *gColorJudge;
 static ObjectDetection *gObjectDetection;
 static TimeDetection *gTimeDetection;
 static HitDetection *gHitDetection;
+static DistanceDetection *gDistanceDetection;
 static Tracer *gTracer;
 static Ar *gAr;
 
@@ -35,17 +36,22 @@ static void user_system_create() {
 	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTimeDetection = new TimeDetection();
 	gHitDetection = new HitDetection(gGyroSensor);
+	gDistanceDetection = new DistanceDetection(gLeftWheel, 
+																						 gRightWheel,
+																						 gTailWheel,
+																						 gArm);
 	gTracer = new Tracer(gColorSensor, 
 											 gLeftWheel, 
 											 gRightWheel,
 											 gTailWheel,
 					 	 					 gArm);
 	gControler = new Controler(gTracer,
+                             gAr,
 														 gPrelude,
 														 gObjectDetection,
 														 gTimeDetection,
-                             gAr,
 														 gHitDetection,
+														 gDistanceDetection,
 														 gColorJudge);
 
 	ev3_led_set_color(LED_ORANGE);
@@ -63,6 +69,7 @@ static void user_system_destroy() {
 	delete gObjectDetection;
 	delete gTimeDetection;
 	delete gHitDetection;
+	delete gDistanceDetection;
 	delete gTracer;
 	delete gControler;
 }
