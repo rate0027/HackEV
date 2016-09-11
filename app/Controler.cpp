@@ -5,15 +5,15 @@ Controler::Controler(Tracer* tracer,
 										 Prelude* prelude,
 										 ObjectDetection* objectDetection,
 										 TimeDetection* timeDetection,
-										 ColorJudge* colorJudge,
-                     distance* distance,
-                     Ar* ar)
+                     Ar* ar,
+										 HitDetection* hitDetection,
+										 ColorJudge* colorJudge)
 	: mTracer(tracer),
 	  mPrelude(prelude),
 		mObjectDetection(objectDetection),
 		mTimeDetection(timeDetection),
+		mHitDetection(hitDetection),
 		mColorJudge(colorJudge),
-    mdistance(distance),
     mAr(ar),
     mState(UNDEFINED){
 }
@@ -65,11 +65,6 @@ void Controler::run() {
 		case STOP:
 			msg_f("STOP", 1);
       mTracer->terminate();
-      break;
-    case BACK:
-      if (mdistance->back() >= 1) {
-        mState = STOP;
-      }
       break;
     default:
   		break;

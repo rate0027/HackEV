@@ -20,8 +20,8 @@ static Prelude *gPrelude;
 static ColorJudge *gColorJudge;
 static ObjectDetection *gObjectDetection;
 static TimeDetection *gTimeDetection;
+static HitDetection *gHitDetection;
 static Tracer *gTracer;
-static distance *gdistance;
 static Ar *gAr;
 
 
@@ -31,13 +31,12 @@ static void user_system_create() {
 	gPrelude = new Prelude(gTouchSensor,
 												 gColorSensor);
 	gColorJudge = new ColorJudge(gColorSensor);
-  gdistance = new distance(gLeftWheel,
-                           gRightWheel);
  	gAr = new Ar(gArm);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTimeDetection = new TimeDetection();
-	gTracer = new Tracer(gColorSensor,
-											 gLeftWheel,
+	gHitDetection = new HitDetection(gGyroSensor);
+	gTracer = new Tracer(gColorSensor, 
+											 gLeftWheel, 
 											 gRightWheel,
 											 gTailWheel,
 					 	 					 gArm);
@@ -45,9 +44,9 @@ static void user_system_create() {
 														 gPrelude,
 														 gObjectDetection,
 														 gTimeDetection,
-														 gColorJudge,
-                             gdistance,
-                             gAr);
+                             gAr,
+														 gHitDetection,
+														 gColorJudge);
 
 	ev3_led_set_color(LED_ORANGE);
 }
@@ -60,10 +59,10 @@ static void user_system_destroy() {
 
 	delete gPrelude;
 	delete gColorJudge;
-  delete gdistance;
   delete gAr;
 	delete gObjectDetection;
 	delete gTimeDetection;
+	delete gHitDetection;
 	delete gTracer;
 	delete gControler;
 }

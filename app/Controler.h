@@ -5,10 +5,10 @@
 #include "Prelude.h"
 #include "ObjectDetection.h"
 #include "TimeDetection.h"
+#include "HitDetection.h"
 #include "util.h"
 #include "Clock.h"
 #include "ColorJudge.h"
-#include "distance.h"
 #include "Ar.h"
 
 
@@ -22,9 +22,9 @@ public:
 			Prelude* prelude,
 			ObjectDetection* objectDetection,
 			TimeDetection* timeDetection,
-			ColorJudge* colorJudge,
-      distance* distance,
-      Ar* ar);
+      Ar* ar,
+			HitDetection* hitDetection,
+			ColorJudge* colorJudge);
 	void init();
 	void terminate();
 	void run();
@@ -37,8 +37,7 @@ private:
 		WAITING_FOR_START,
 		WALKING,
 		OBJECT_DETECTION,
-		STOP,
-    BACK,
+		STOP
 	};
 	
 	Clock clock;
@@ -47,8 +46,8 @@ private:
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
 	TimeDetection* mTimeDetection;
+	HitDetection* mHitDetection;
 	ColorJudge* mColorJudge;
-  distance* mdistance;
   Ar* mAr;
 	State mState;
 	int TARGET = 0;
