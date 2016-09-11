@@ -31,13 +31,11 @@ static void user_system_create() {
 	gPrelude = new Prelude(gTouchSensor,
 												 gColorSensor);
 	gColorJudge = new ColorJudge(gColorSensor);
-  gdistance = new distance(gLeftWheel,
-                           gRightWheel);
  	gAr = new Ar(gArm);
 	gObjectDetection = new ObjectDetection(gSonarSensor);
 	gTimeDetection = new TimeDetection();
 	gHitDetection = new HitDetection(gGyroSensor);
-	gTracer = new Tracer(gColorControl, 
+	gTracer = new Tracer(gColorSensor, 
 											 gLeftWheel, 
 											 gRightWheel,
 											 gTailWheel,
