@@ -1,29 +1,34 @@
 #include "DistanceDetection.h"
 
 
-DistanceDetection::DistanceDetaction(Motor& leftMotor,
-																		 Motor& rightMotor)
-	: mLeftMotor(leftMotor),
-	  mRightMotor(rightMotor) {
+DistanceDetection::DistanceDetection(Motor& leftWheel,
+													           Motor& rightWheel,
+											               Motor& tailWheel,
+									                   Motor& arm)
+: mLeftWheel(leftWheel),
+	mRightWheel(rightWheel),
+	mTailWheel(tailWheel),
+	mArm(arm) {
 }
 
 
-bool DistanceDetection::left(int dist) {
-	int onerotate = 24;
-	float num = dist/24;
-	/* 目標角設定 */
-  float target = 360 * num;  
-
-	int Conut = mLeftMotor.getCount();
-	if (Count >= target) {
-    return 1;
+bool DistanceDetection::test(int dist) {
+	float count = (float)(mLeftWheel.getCount());
+	if (dist > 0) {
+		if (count >= dist ) {
+			mLeftWheel.reset();
+			return true;
+		} else {
+			return false;
+		}
 	} else {
-    return 0;
+		if (count <= dist ) {
+			mLeftWheel.reset();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
 
-
-bool DistanceDetection::right(int dist) {
-
-}

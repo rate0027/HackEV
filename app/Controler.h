@@ -2,14 +2,15 @@
 #define EV3_APP_CONTROLER_H_
 
 #include "Tracer.h"
+#include "Ar.h"
 #include "Prelude.h"
 #include "ObjectDetection.h"
 #include "TimeDetection.h"
 #include "HitDetection.h"
+#include "DistanceDetection.h"
+#include "ColorJudge.h"
 #include "util.h"
 #include "Clock.h"
-#include "ColorJudge.h"
-#include "Ar.h"
 
 
 /* クラスの宣言 */
@@ -19,11 +20,12 @@ public:
   /* publicメソッドの宣言
 	 * メソッドの詳細はcppを参照 */
 	Controler(Tracer* tracer,
+      Ar* ar,
 			Prelude* prelude,
 			ObjectDetection* objectDetection,
 			TimeDetection* timeDetection,
-      Ar* ar,
 			HitDetection* hitDetection,
+			DistanceDetection* distanceDetection,
 			ColorJudge* colorJudge);
 	void init();
 	void terminate();
@@ -43,12 +45,13 @@ private:
 	Clock clock;
 
 	Tracer* mTracer;
+  Ar* mAr;
 	Prelude* mPrelude;
 	ObjectDetection* mObjectDetection;
 	TimeDetection* mTimeDetection;
 	HitDetection* mHitDetection;
+	DistanceDetection* mDistanceDetection;
 	ColorJudge* mColorJudge;
-  Ar* mAr;
 	State mState;
 	int TARGET = 0;
 

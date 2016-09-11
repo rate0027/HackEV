@@ -2,19 +2,21 @@
 
 /* コンストラクタ */
 Controler::Controler(Tracer* tracer,
+                     Ar* ar,
 										 Prelude* prelude,
 										 ObjectDetection* objectDetection,
 										 TimeDetection* timeDetection,
-                     Ar* ar,
 										 HitDetection* hitDetection,
+										 DistanceDetection* distanceDetection,
 										 ColorJudge* colorJudge)
 	: mTracer(tracer),
+    mAr(ar),
 	  mPrelude(prelude),
 		mObjectDetection(objectDetection),
 		mTimeDetection(timeDetection),
 		mHitDetection(hitDetection),
+		mDistanceDetection(distanceDetection),
 		mColorJudge(colorJudge),
-    mAr(ar),
     mState(UNDEFINED){
 }
 
@@ -48,10 +50,6 @@ void Controler::run() {
 			} else {
 				msg_f("running...", 1);
 				mTracer->run(TARGET);
-
-				if (mColorJudge->judgeRED() == 1){
-					mState = STOP;
-				}
 			}
 			break;
 		case OBJECT_DETECTION:
