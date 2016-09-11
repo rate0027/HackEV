@@ -50,10 +50,6 @@ void Controler::run() {
 			} else {
 				msg_f("running...", 1);
 				mTracer->run(TARGET);
-
-				if (mColorJudge->judgeRED() == 1){
-					mState = STOP;
-				}
 			}
 			break;
 		case OBJECT_DETECTION:
