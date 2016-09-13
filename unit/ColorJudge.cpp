@@ -44,7 +44,14 @@ if(  mColorSensor.getColorNumber() == 1){
 	return(false);
 }
 }
-/*
-void ColorJudge::JudgeRGB(){
 
-}*/
+
+bool ColorJudge::JudgeGray(){
+	mColorSensor.getRawColor(*rgb);	
+	if (45 < rgb->r && rgb->r <  65 && 70 < rgb->g && rgb->g < 80 && 50 < rgb->b && rgb->b < 65 ) {
+    return(true);
+	} else {
+		return(false);
+	}
+}
+
