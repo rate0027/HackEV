@@ -13,7 +13,7 @@ public:
 				 Motor& rightWheel,
 				 Motor& tailWheel,
 				 Motor& arm);
-	bool test(int);
+	bool left(int);
 private:
 	Motor& mLeftWheel;
 	Motor& mRightWheel;

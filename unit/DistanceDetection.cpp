@@ -12,7 +12,7 @@ DistanceDetection::DistanceDetection(Motor& leftWheel,
 }
 
 
-bool DistanceDetection::test(int dist) {
+bool DistanceDetection::left(int dist) {
 	float count = (float)(mLeftWheel.getCount());
 	if (dist > 0) {
 		if (count >= dist ) {
