@@ -45,6 +45,7 @@ private:
 		STEP5,
 		STEP6,
 		STEP7,
+		STEP8,
 		STOP
 	};
 	
@@ -67,6 +68,7 @@ private:
 	State mState;
 	LState mLState;
 	int TARGET = 0;
+	int star = 0;
 
 };
 

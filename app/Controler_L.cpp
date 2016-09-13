@@ -98,7 +98,15 @@ void Controler::run() {
 			msg_f("running...", 1);		
 			mTracer->run(TARGET);
 			
-			if (mColorJudge->JudgeGray()) {
+			if ((star =  mColorJudge->isColor()) > 0) {
+				ev3_speaker_play_tone(NOTE_D5, 10);
+				mState = STEP8;
+			}
+			break;
+		case STEP8:
+			msg_f("running...", 1);		
+			mTracer->NLT(20,10);
+			if (mDistanceDetection->left(150)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mState = STOP;
 			}
