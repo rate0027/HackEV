@@ -46,6 +46,9 @@ private:
 		STEP6,
 		STEP7,
 		STEP8,
+		STEP9,
+		STEP10,
+		STEP11,
 		STOP
 	};
 	

@@ -20,7 +20,7 @@ bool TimeDetection::isOver(uint32_t time) const{
 
 /* 経過時間をリセットする関数
  * isOverを使う前のステートで使用 */
-void TimeDetection::Reset() {
+void TimeDetection::reset() {
   clock.reset();
 }
 
