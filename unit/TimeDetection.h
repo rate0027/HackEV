@@ -12,7 +12,7 @@ class TimeDetection {
 public:
   explicit TimeDetection();
 	bool isOver(uint32_t) const;
-	void Reset();
+	void reset();
 
 private:
   Clock clock; 

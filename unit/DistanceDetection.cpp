@@ -32,3 +32,28 @@ bool DistanceDetection::left(int dist) {
 
 }
 
+bool DistanceDetection::right(int dist) {
+	float count = (float)(mRightWheel.getCount());
+	if (dist > 0) {
+		if (count >= dist ) {
+			mRightWheel.reset();
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		if (count <= dist ) {
+			mRightWheel.reset();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+}
+
+
+void DistanceDetection::reset() {
+	mLeftWheel.reset();
+	mRightWheel.reset();
+}

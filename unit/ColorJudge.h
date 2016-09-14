@@ -10,12 +10,9 @@ using namespace ev3api;
 class ColorJudge {
 	public:
 	explicit ColorJudge(const ColorSensor& colorSensor);
-	bool judgeRED();
-	bool judgeBLUE();
-	bool judgeGREEN();
-	bool judgeYELOW();
+	int isColor();
 	bool judgeBLACK();
-	bool JudgeGray();
+	bool judgeGray();
 	
 private:
 	const ColorSensor& mColorSensor;		

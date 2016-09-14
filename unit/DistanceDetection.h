@@ -14,6 +14,8 @@ public:
 				 Motor& tailWheel,
 				 Motor& arm);
 	bool left(int);
+	bool right(int);
+	void reset();
 private:
 	Motor& mLeftWheel;
 	Motor& mRightWheel;
