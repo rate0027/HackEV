@@ -7,6 +7,7 @@ ColorJudge::ColorJudge(const ColorSensor& colorSensor)
 int ColorJudge::isColor() {
 	int Color = mColorSensor.getColorNumber();
 	if (Color > 1 && 6 > Color) {
+		msg_f("retrun Color",3);
 		return Color;
 	} else {
 		return 0;
