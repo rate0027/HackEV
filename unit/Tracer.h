@@ -15,7 +15,8 @@ public:
 				 Motor& tailWheel,
          Motor& arm);
   void run(int);
-	void NLT(int, int);
+  void runL(int);
+  void NLT(int, int);
   void init();
   void terminate();
 
