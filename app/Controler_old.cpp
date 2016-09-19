@@ -45,7 +45,7 @@ void Controler::run() {
 			ev3_led_set_color(LED_ORANGE);
 			break;
 		case WALKING:
-			if (mObjectDetection->isPressed() <= 10){
+			if (mObjectDetection->isPressed() <= 3.9){
 				mState = OBJECT_DETECTION;
 			} else {
 				msg_f("running...", 1);
@@ -53,7 +53,7 @@ void Controler::run() {
 			}
 			break;
 		case OBJECT_DETECTION:
-			if (mObjectDetection->isPressed() >= 11) {
+			if (mObjectDetection->isPressed() >= 4) {
 				mState = WALKING;
 			}else {
 				msg_f("object_detection", 1);
