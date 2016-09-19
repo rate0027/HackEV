@@ -26,7 +26,7 @@ public:
 			TimeDetection* timeDetection,
 			HitDetection* hitDetection,
 			DistanceDetection* distanceDetection,
-			ColorJudge* colorJudge,
+			ColorJudge* colorJudge
 				);
 	void init();
 	void terminate();
