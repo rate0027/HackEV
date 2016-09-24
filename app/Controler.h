@@ -26,11 +26,12 @@ public:
 			TimeDetection* timeDetection,
 			HitDetection* hitDetection,
 			DistanceDetection* distanceDetection,
-			ColorJudge* colorJudge);
+			ColorJudge* colorJudge
+				);
 	void init();
 	void terminate();
 	void run();
-
+	
 
 /* 内部だけで動かす部分を記述 */
 private:
@@ -38,9 +39,7 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
-		COLOR_THROUGH,
-		BLOCK_THROUGH,
-		CURVE,
+		OBJECT_DETECTION,
 		STOP
 	};
 	
@@ -56,7 +55,7 @@ private:
 	ColorJudge* mColorJudge;
 	State mState;
 	int TARGET = 0;
-
+	
 };
 
 

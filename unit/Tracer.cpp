@@ -26,9 +26,14 @@ void Tracer::terminate() {
 
 
 void Tracer::run(int target) {
-    const float Kp = 0.7; /* 0.63 */
-    const float Ki = 0.3;
-    const float Kd = 0.14; /*0.125*/
+	
+  //  const float Kp = 0.7; /* 0.63 */
+  //  const float Ki = 0.15;
+  //  const float Kd = 0.56; /*0.125*/
+		const float Kp = 0.2;
+		const float Ki = 0.1;
+		const float Kd = 0.3;
+			
     const int bias = 0;
     int p,i,d;
     float integral;
