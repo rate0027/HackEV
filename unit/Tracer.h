@@ -14,7 +14,7 @@ public:
 				 Motor& rightWheel,
 				 Motor& tailWheel,
          Motor& arm);
-  void run(int);
+  void run(int, int);
   void runL(int);
   void NLT(int, int);
   void init();

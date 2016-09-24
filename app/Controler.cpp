@@ -49,7 +49,7 @@ void Controler::run() {
 				mState = OBJECT_DETECTION;
 			} else {
 				msg_f("running...", 1);
-				mTracer->run(TARGET);
+				mTracer->run(TARGET, 1);
 			}
 			break;
 		case OBJECT_DETECTION:
