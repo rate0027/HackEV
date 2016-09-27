@@ -39,7 +39,7 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
-		OBJECT_DETECTION,
+		COLOR,
 		STOP
 	};
 	
@@ -55,7 +55,9 @@ private:
 	ColorJudge* mColorJudge;
 	State mState;
 	int TARGET = 0;
+	int flag=0;
 	
+	int pos_run(int, int);
 };
 
 

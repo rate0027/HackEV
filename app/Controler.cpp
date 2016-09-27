@@ -45,20 +45,20 @@ void Controler::run() {
 			ev3_led_set_color(LED_ORANGE);
 			break;
 		case WALKING:
-			if (mObjectDetection->isPressed() <= 3.9){
-				mState = OBJECT_DETECTION;
-			} else {
 				msg_f("running...", 1);
 				mTracer->run(TARGET, 1);
-			}
+#if 0
+				if (mColorJudge->isColor() != 0) {
+				  mState = COLOR;
+					mDistanceDetection->reset();
+				}
+#endif
 			break;
-		case OBJECT_DETECTION:
-			if (mObjectDetection->isPressed() >= 4) {
-				mState = WALKING;
-			}else {
-				msg_f("object_detection", 1);
-				mTracer->terminate();
-			}
+		case COLOR:
+				msg_f("running...", 1);
+				if (pos_run(TARGET, 2)) {
+				  mState = STOP;
+				}
 			break;
 		case STOP:
 			msg_f("STOP", 1);
@@ -69,4 +69,33 @@ void Controler::run() {
 	}
 	
 }
+
+int Controler::pos_run(int target, int X) {
+	int count = 1; //色の検出回数
+
+	switch(flag) {
+		case 0:		
+		mTracer->NLT(20,22);
+		if (mDistanceDetection->left(200)) {
+			flag = 1;
+		}	
+		break;
+		case 1:
+		mTracer->run(target, 0);
+		if (mColorJudge->isColor() != 0) {
+      flag = 0;
+			count++;
+		}
+		break;
+	}
+
+	if (count == X) {
+		flag = 0;
+		return true;
+	}else {
+		return false;
+	}
+}
+
+
 
