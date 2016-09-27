@@ -47,18 +47,20 @@ void Controler::run() {
 		case WALKING:
 				msg_f("running...", 1);
 				mTracer->run(TARGET, 1);
-#if 0
 				if (mColorJudge->isColor() != 0) {
-				  mState = COLOR;
+				  mState = OBJECT;
 					mDistanceDetection->reset();
 				}
-#endif
+			break;
+		case OBJECT:
+				msg_f("running...", 1);
+				if (thr_bl()) {
+				  mState = COLOR;
+				}
 			break;
 		case COLOR:
 				msg_f("running...", 1);
-				if (pos_run(TARGET, 2)) {
-				  mState = STOP;
-				}
+				mTracer->runL(TARGET);
 			break;
 		case STOP:
 			msg_f("STOP", 1);
@@ -97,5 +99,47 @@ int Controler::pos_run(int target, int X) {
 	}
 }
 
+bool Controler::thr_bl(void) {
+
+  switch(flag) {	
+	case 0: //避けるために後ろに下がる
+		mTracer->NLT(-10,-10);
+		if (mDistanceDetection->left(-230)) {
+			mDistanceDetection->reset();
+			flag = 1;
+			return false;
+		}	
+		break;
+	case 1: 
+		mTracer->NLT(10, -10);
+		if (mDistanceDetection->right(100)) {
+			flag = 2;
+			return false;
+		}
+		break;
+	case 2:
+	 mTracer->NLT(10, 18);	
+	 if (mColorJudge->judgeBLACK() ) {
+			mDistanceDetection->reset();
+		 flag = 3;
+		 return false;
+	 }
+	 break;
+	case 3: 
+		mTracer->NLT(8, -10);
+		if (mDistanceDetection->left(-30)) {
+			flag = 4;
+			return false;
+		}
+		break;
+	case 4: 
+		mTracer->NLT(10, 0);
+		if (mDistanceDetection->right(70)) {
+			flag = 0;
+			return true;
+		}
+		break;
+	}
+}
 
 

@@ -39,6 +39,7 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
+		OBJECT,
 		COLOR,
 		STOP
 	};
@@ -58,6 +59,7 @@ private:
 	int flag=0;
 	
 	int pos_run(int, int);
+	bool thr_bl(void);
 };
 
 

@@ -27,7 +27,7 @@ void Tracer::terminate() {
 void Tracer::run(int target, int edge) {
 	const float Kp = 0.7; /* 0.63 */
 	const float Ki = 0.15;
-	const float Kd = 0.56; /*0.125*/
+	const float Kd = 0.03; /*0.125*/
 	//const float Kp = 0.2;
 	//const float Ki = 0.1;
 	//const float Kd = 0.3;
@@ -75,15 +75,15 @@ void Tracer::run(int target, int edge) {
 
 	mLeftWheel.setPWM(ipwmL);
 	mRightWheel.setPWM(ipwmR);
-	mTailWheel.setPWM(turn*3);
+//	mTailWheel.setPWM(turn*3);
 
 }
 
 
 void Tracer::runL(int target) {
-    const float Kp = 0.7; /* 0.63 */
-    const float Ki = 0.3;
-    const float Kd = 0.14; /*0.125*/
+    const float Kp = 0.8; /* 0.63 */
+    const float Ki = 0.1;
+    const float Kd = 0.1; /*0.125*/
     const int bias = 0;
     int p,i,d;
     float integral;
@@ -109,7 +109,7 @@ void Tracer::runL(int target) {
     }
     mLeftWheel.setPWM(ipwmL);
     mRightWheel.setPWM(ipwmR);
-    mTailWheel.setPWM(turn*3);
+//    mTailWheel.setPWM(turn*3);
 
     
 }
@@ -117,6 +117,6 @@ void Tracer::runL(int target) {
 
 
 void Tracer::NLT(int ipwmR, int ipwmL) {
-    mLeftWheel.setPWM(ipwmL*1.2);
+    mLeftWheel.setPWM(ipwmL*1.05);
     mRightWheel.setPWM(ipwmR);
 }
