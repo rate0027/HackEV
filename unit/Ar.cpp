@@ -2,10 +2,10 @@
 Ar::Ar(Motor& arm)
 : mArm(arm){
 }
-bool Ar::arup() {
-    mArm.setPWM(2);
+bool Ar::armUp() {
+    mArm.setPWM(30);
     float u = (float)(mArm.getCount());
-    if(u >= 90){
+    if(u >= 100){
         return(true);
         u = 0;
     }else{
@@ -13,10 +13,10 @@ bool Ar::arup() {
     }
 }
 
-bool Ar::ardown() {
-    mArm.setPWM(-1);
+bool Ar::armDown() {
+    mArm.setPWM(-25);
     float v = (float)(mArm.getCount());
-    if(v <= -90){
+    if(v <= -100){
         return(true);
             v = 0;
     }else{
@@ -24,13 +24,6 @@ bool Ar::ardown() {
     }
 }
 
-bool Ar::arupn() {
-    mArm.setPWM(2);
-    float w = (float)(mArm.getCount());
-    if(w >= 20){
-        return(true);
-            w = 0;
-    }else{
-        return(false);
-    }
+void Ar::reset() {
+    mArm.reset();
 }
