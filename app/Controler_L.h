@@ -49,6 +49,9 @@ private:
 		STEP9,
 		STEP10,
 		STEP11,
+		OBJECT_DETECTION,
+		TRAIN_WAIT,
+		TRACE,
 		STOP
 	};
 	

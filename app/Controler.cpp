@@ -47,20 +47,33 @@ void Controler::run() {
 		case WALKING:
 				msg_f("running...", 1);
 				mTracer->run(TARGET, 1);
-				if (mColorJudge->isColor() != 0) {
-				  mState = OBJECT;
+				if (mDistanceDetection->left(1600)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
 					mDistanceDetection->reset();
+					mState = OBJECT_DETECTION;
 				}
-			break;
-		case OBJECT:
-				msg_f("running...", 1);
-				if (thr_bl()) {
-				  mState = COLOR;
+				break;
+		case OBJECT_DETECTION:
+				mTracer->NLT(0,0);
+				if (mObjectDetection->isObject(10)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
+					mTimeDetection->reset();
+					mState = TRAIN_WAIT;
 				}
-			break;
-		case COLOR:
+				break;
+		case TRAIN_WAIT:
+				mTracer->NLT(0,0);
+				if (mTimeDetection->isOver(1500)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
+					mState = TRACE;
+				}
+		case TRACE:
 				msg_f("running...", 1);
-				mTracer->runL(TARGET);
+				mTracer->run(TARGET, 1);
+				if (mDistanceDetection->left(500)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
+					mState = STOP;
+				}
 			break;
 		case STOP:
 			msg_f("STOP", 1);

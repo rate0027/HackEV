@@ -6,7 +6,11 @@ ObjectDetection::ObjectDetection(SonarSensor& sonarSensor)
 	: mSonarSensor(sonarSensor) {
 }
 
-/* 押し判断メソッド */
-int ObjectDetection::isPressed() {
-	return mSonarSensor.getDistance();
+/* 距離判断メソッド */
+bool ObjectDetection::isObject(int dist) {
+	if ( mSonarSensor.getDistance() <= dist) {
+		return true;
+	} else {
+		return false;
+	}
 }

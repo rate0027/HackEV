@@ -47,7 +47,7 @@ void Controler::run() {
 			break;
 		case WALKING: //初めの直線
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(3500)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mState = STEP2;
@@ -55,7 +55,7 @@ void Controler::run() {
 			break;
 		case STEP2: //カーブ
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(1600)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mState = STEP3;
@@ -63,7 +63,7 @@ void Controler::run() {
 			break;
 		case STEP3: //直線 
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(1500)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mState = STEP4;
@@ -71,7 +71,7 @@ void Controler::run() {
 			break;
 		case STEP4: //カーブからラインチェンジ直前まで
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(2240)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mState = STEP5;
@@ -87,7 +87,7 @@ void Controler::run() {
 			break;
 		case STEP6: //ライン復帰
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			
 			if (mDistanceDetection->left(1500)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
@@ -96,7 +96,7 @@ void Controler::run() {
 			break;
 		case STEP7: //星取りまで
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			
 			if ((star =  mColorJudge->isColor()) > 0) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
@@ -132,11 +132,33 @@ void Controler::run() {
 			break;
 		case STEP11: //相撲の前まで移動
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(1600)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
-				mState = STOP;
+				mState = OBJECT_DETECTION;
 			}
+			break;
+		case OBJECT_DETECTION:
+				mTracer->NLT(0,0);
+				if (mObjectDetection->isObject(10)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
+					mTimeDetection->reset();
+					mState = TRAIN_WAIT;
+				}
+				break;
+		case TRAIN_WAIT:
+				mTracer->NLT(0,0);
+				if (mTimeDetection->isOver(1500)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
+					mState = TRACE;
+				}
+		case TRACE:
+				msg_f("running...", 1);
+				mTracer->run(TARGET, 0);
+				if (mDistanceDetection->left(500)) {
+					ev3_speaker_play_tone(NOTE_D5, 10);
+					mState = STOP;
+				}
 			break;
 		case STOP:
 			msg_f("STOP", 1);
@@ -152,7 +174,7 @@ void Controler::L_course() {
 	switch (mLState) {
 		case step1:
 			msg_f("running...", 1);		
-			mTracer->run(TARGET);
+			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(4000)) {
 					ev3_speaker_play_tone(NOTE_D5, 200);
 					mLState = step3;

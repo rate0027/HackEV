@@ -10,7 +10,7 @@ using namespace ev3api;
 class ObjectDetection {
 public:
   explicit ObjectDetection(SonarSensor& sonarSensor);
-	int isPressed();
+	bool isObject(int);
 
 private:
 	SonarSensor& mSonarSensor;
