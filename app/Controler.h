@@ -59,8 +59,7 @@ private:
 	int TARGET = 0;
 	int flag=0;
 	
-	int pos_run(int, int);
-	bool thr_bl(void);
+	bool lBasic(void);
 };
 
 

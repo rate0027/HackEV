@@ -138,7 +138,7 @@ void Controler::run() {
 				mState = OBJECT_DETECTION;
 			}
 			break;
-		case OBJECT_DETECTION:
+		case OBJECT_DETECTION: //電車を検知するまで停止
 				mTracer->NLT(0,0);
 				if (mObjectDetection->isObject(10)) {
 					ev3_speaker_play_tone(NOTE_D5, 10);
@@ -146,13 +146,13 @@ void Controler::run() {
 					mState = TRAIN_WAIT;
 				}
 				break;
-		case TRAIN_WAIT:
+		case TRAIN_WAIT: //電車が通りすぎるまでwait
 				mTracer->NLT(0,0);
 				if (mTimeDetection->isOver(1500)) {
 					ev3_speaker_play_tone(NOTE_D5, 10);
 					mState = TRACE;
 				}
-		case TRACE:
+		case TRACE: //相撲エリアに侵入(距離未調整)
 				msg_f("running...", 1);
 				mTracer->run(TARGET, 0);
 				if (mDistanceDetection->left(500)) {
