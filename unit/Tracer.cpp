@@ -24,51 +24,58 @@ void Tracer::terminate() {
 }
 
 
+void Tracer::run(int target, int edge) {
+	const float Kp = 0.7; /* 0.63 */
+	const float Ki = 0.15;
+	const float Kd = 0.56; /*0.125*/
+	//const float Kp = 0.2;
+	//const float Ki = 0.1;
+	//const float Kd = 0.3;
 
-void Tracer::run(int target) {
-    const float Kp = 0.7; /* 0.63 */
-    const float Ki = 0.3;
-    const float Kd = 0.14; /*0.125*/
-    const int bias = 0;
-    int p,i,d;
-    float integral;
-    
-    int diff[2];
-    diff[0] = diff[1];
-    diff[1] = mColorSensor.getBrightness() - target;
-    integral += (diff[1] + diff[0]) / 2.0;
-    p = Kp * diff[1] + bias;
-    i = Ki * integral;
-    d = Kd * (diff[1] - diff[0]);
-    float turn = p+i+d;
-    int ipwmR = pwm;
-    int ipwmL = pwm;
-    //    mLeftWheel.setPWM(pwm - turn);
-    //    mRightWheel.setPWM(pwm + turn);
-    
-    /*
-     int diff = mColorControl->getBrightness() - target;
-     float turn = Kp * diff + bias;
-     */
-    
-    if(turn > 0){
-        ipwmR = (pwm);
-        ipwmL = (pwm - turn);
-    }
-    else if(turn < 0){
-        ipwmL = (pwm);
-        ipwmR = (pwm + turn);
-    }
-    mLeftWheel.setPWM(ipwmL);
-    mRightWheel.setPWM(ipwmR);
-   // mLeftWheel.setPWM(0);
-   // mRightWheel.setPWM(0);
-		mTailWheel.setPWM(turn*3);
-/*
-	mColorSensor.getRawColor(*rgb);	
-	sprintf(str1, "%u  %u  %u", rgb->r, rgb->g, rgb->b);
-	msg_f(str1,2);
-*/
+	const int bias = 0;
+	int p,i,d;
+	float integral;
+
+	int diff[2];
+	diff[0] = diff[1];
+	diff[1] = mColorSensor.getBrightness() - target;
+	integral += (diff[1] + diff[0]) / 2.0;
+	p = Kp * diff[1] + bias;
+	float turn = p+i+d;
+	int ipwmR = pwm;
+	int ipwmL = pwm;
+	//    mLeftWheel.setPWM(pwm - turn);
+	//    mRightWheel.setPWM(pwm + turn);
+
+	/*
+		 int diff = mColorControl->getBrightness() - target;
+		 float turn = Kp * diff + bias;
+		 */
+
+	if (edge == 0) { // Right edge
+		if(turn > 0){
+			ipwmR = (pwm);
+			ipwmL = (pwm - turn);
+		}
+		else if(turn < 0){
+			ipwmL = (pwm);
+			ipwmR = (pwm + turn);
+		}
+	
+	} else if (edge == 1) { //Left edge
+		if(turn > 0){
+			ipwmL = (pwm);
+			ipwmR = (pwm - turn);
+		}
+		else if(turn < 0){
+			ipwmR = (pwm);
+			ipwmL = (pwm + turn);
+		}
+	}
+
+	mLeftWheel.setPWM(ipwmL);
+	mRightWheel.setPWM(ipwmR);
+	mTailWheel.setPWM(turn*3);
 
 }
 
@@ -110,6 +117,6 @@ void Tracer::runL(int target) {
 
 
 void Tracer::NLT(int ipwmR, int ipwmL) {
-    mLeftWheel.setPWM(ipwmL);
+    mLeftWheel.setPWM(ipwmL*1.2);
     mRightWheel.setPWM(ipwmR);
 }

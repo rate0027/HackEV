@@ -14,7 +14,7 @@ public:
 				 Motor& rightWheel,
 				 Motor& tailWheel,
          Motor& arm);
-  void run(int);
+  void run(int, int);
   void runL(int);
   void NLT(int, int);
   void init();
@@ -28,7 +28,7 @@ private:
   Motor& mArm;
   const int8_t mThreshold = 21;
   //const int8_t pwm = (Motor::PWM_MAX) / 6;
-  const int8_t pwm = 25;
+  const int8_t pwm = 40;
 	rgb_raw_t* rgb;
 	char str1[128]={0};
 };

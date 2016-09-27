@@ -31,12 +31,6 @@ void Controler::terminate() {
 
 /* runメソッド: 状態に応じて動作させる */
 void Controler::run() {
-	int x=1,y=1,z=4;
-	int i=0,f=0;
-	int bxy[4][2] = {	{3,1},
-							{2,2},
-							{3,3},
-							{4,4}}	;
 	switch(mState) {
 		case UNDEFINED:
 			if( (TARGET = mPrelude->calibration()) > 0 ) {
@@ -50,84 +44,58 @@ void Controler::run() {
 			}
 			ev3_led_set_color(LED_ORANGE);
 			break;
-/********************************************************			
-			case WALKING:
-			if (mObjectDetection->isPressed() <= 10){
-				mState = OBJECT_DETECTION;
-			} else {
-				msg_f("running...", 1);
-				mTracer->run(TARGET);
-			}
-			break;
-		case OBJECT_DETECTION:
-			if (mObjectDetection->isPressed() >= 11) {
-				mState = WALKING;
-			}else {
-				msg_f("object_detection", 1);
-				mTracer->terminate();
-			}
-			break;
-**********************************************************/
-/************************************************************ 追加した部分 Rコース用 */
-/*座標,速度等はいじる必要あり*/
 		case WALKING:
-		{
-			mTracer->run(TARGET);				/*難所内のLT.色発見したらスルーステートへ*/
-			if(mColorJudge->isColor() != 0) {
-				mState = BLOCK_THROUGH;
-			}
-		}
+				msg_f("running...", 1);
+				mTracer->run(TARGET, 1);
+#if 0
+				if (mColorJudge->isColor() != 0) {
+				  mState = COLOR;
+					mDistanceDetection->reset();
+				}
+#endif
 			break;
-		case COLOR_THROUGH:					/*NLTを使ってちょっと進んでLTへ戻る*/
-		{
-			mTracer->NLT(10,10);
-			if(mDistanceDetection->left(300)){
-				ev3_speaker_play_tone(NOTE_D5, 10);
-				mState = WALKING;	
-			}
-		}
+		case COLOR:
+				msg_f("running...", 1);
+				if (pos_run(TARGET, 2)) {
+				  mState = STOP;
+				}
 			break;
-		case BLOCK_THROUGH:				/*ブロック避ステート*/
-		{
-			mTracer->NLT(5,5);
-			if(mDistanceDetection->left(400)){
-				mState = CURVE;
-			}
-		}
-			break;
-		case CURVE:
-		{
-			mTracer->NLT(10,15);
-			if(mDistanceDetection->left(300)){
-				mState =  WALKING;
-			}	
-		}
-			break;
-/*		case DIRECTION_CHANGE:	//方向転換ステート.現在のzを取得してturnの長さを変えたい
-		{
-			if(bx < 0){
-				
-		}
-			break;
-		case POINT_SEARCH:
-		{
-			if(i =< 3 && f <= 1){
-				bx = x - bxy[i][f];
-				f ++;
-				by = y - bxy[i][f];
-			}else if(f > 1){
-				mState = DIRECTION_CHANGE;
-		}
-			break;
-*/
-/*ここまで */			
 		case STOP:
 			msg_f("STOP", 1);
-     		mTracer->terminate();
-      		break;
-    	default:
-  			break;
+      mTracer->terminate();
+      break;
+    default:
+  		break;
 	}
 	
 }
+
+int Controler::pos_run(int target, int X) {
+	int count = 1; //色の検出回数
+
+	switch(flag) {
+		case 0:		
+		mTracer->NLT(20,22);
+		if (mDistanceDetection->left(200)) {
+			flag = 1;
+		}	
+		break;
+		case 1:
+		mTracer->run(target, 0);
+		if (mColorJudge->isColor() != 0) {
+      flag = 0;
+			count++;
+		}
+		break;
+	}
+
+	if (count == X) {
+		flag = 0;
+		return true;
+	}else {
+		return false;
+	}
+}
+
+
 
