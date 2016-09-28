@@ -39,8 +39,7 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
-		OBJECT_DETECTION,
-		TRAIN_WAIT,
+		THROUGH,
 		TRACE,
 		STOP
 	};
@@ -58,8 +57,11 @@ private:
 	State mState;
 	int TARGET = 0;
 	int flag=0;
+	int count = 0;
 	
 	bool lBasic(void);
+	bool rStart(void);
+	bool rSortThrough(void);
 };
 
 

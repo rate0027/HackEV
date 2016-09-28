@@ -45,11 +45,24 @@ void Controler::run() {
 			ev3_led_set_color(LED_ORANGE);
 			break;
 		case WALKING:
-				msg_f("running...", 1);
-				if (lBasic()) {
-				  mState = STOP;
-				}
-				break;
+			msg_f("running...", 1);
+			if (rStart()) {
+			  mState = THROUGH;
+			}
+			break;
+		case THROUGH:
+			msg_f("running...", 1);
+			if (rSortThrough()) {
+				mDistanceDetection->reset();
+			  mState = TRACE;
+			}
+			break;
+		case TRACE:
+			mTracer->run(TARGET,1);
+			if(mDistanceDetection->left(15300)) {
+				mState = STOP;
+			}
+			break;
 		case STOP:
 			msg_f("STOP", 1);
       mTracer->terminate();
@@ -121,6 +134,68 @@ bool Controler::lBasic() {
 				return true;
 			}
 			break;
-			
 	}
+	return false;
+}
+
+/*
+ * rStart
+ * Rコースをスタートしてブロック並べの方向へ向く 
+ */
+bool Controler::rStart(void) {
+	switch(flag) {
+		case 0:
+			mTracer->run(TARGET, 1);
+			if (mDistanceDetection->left(700)) {
+				ev3_speaker_play_tone(NOTE_D5, 10);
+				mDistanceDetection->reset();
+				flag = 1;
+				return false;
+			}
+			break;
+		case 1:
+			mTracer->NLT(10, -10);
+			if (mDistanceDetection->right(130)) {
+				ev3_speaker_play_tone(NOTE_D5, 10);
+				flag = 0;
+				return true;
+			}
+			break;
+	}
+	return false;
+}
+
+bool Controler::rSortThrough(void){
+	switch(flag) {
+		case 0:
+			mTracer->NLT(10,10);
+			if (mColorJudge->judgeBLACK()) {
+				ev3_speaker_play_tone(NOTE_D5, 10);
+				mTimeDetection->reset();
+				flag = 1;
+				return false;
+			}
+			break;
+		case 1:
+			if (mTimeDetection->isOver(500)) {
+				ev3_speaker_play_tone(NOTE_D5, 10);
+				if (++count == 5) {
+					flag = 2;
+					mDistanceDetection->reset();
+				} else {
+					flag = 0;
+				}
+				return false;
+			}
+			break;
+		case 2:
+			mTracer->NLT(-10, 10);
+			if (mDistanceDetection->left(135)) {
+				ev3_speaker_play_tone(NOTE_D5, 10);
+				flag = 0;
+				return true;
+			}
+			break;
+	}
+	return false;
 }
