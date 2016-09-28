@@ -12,8 +12,7 @@ class ColorJudge {
 	explicit ColorJudge(const ColorSensor& colorSensor);
 	int isColor();
 	bool judgeBlack();
-	bool judgeYellow();
-	
+	int isColorRGB();	
 private:
 	const ColorSensor& mColorSensor;		
 	rgb_raw_t* rgb = {0};

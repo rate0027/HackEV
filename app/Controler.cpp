@@ -66,9 +66,8 @@ void Controler::run() {
 			break;
 #endif
 		case WALKING:
-			if ( lBasic() ) {
-				mState = STOP;
-			}
+			mTracer->NLT(0, 0);
+			mColorJudge->isColorRGB();
 			break;
 		case STOP:
 			msg_f("STOP", 1);
