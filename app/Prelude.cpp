@@ -34,7 +34,7 @@ int Prelude::calibration() {
 			break;
 		case COMPLETE:
 	    tslp_tsk(200);
-			target = (black + white) * 0.3;
+			target = (black + white) * 0.5;
 			break;
 		default:
 			break;

@@ -91,6 +91,7 @@ void tracer_task(intptr_t exinf) {
   ext_tsk();
 }
 
+
 /* メインタスク */
 void main_task(intptr_t unused) {
 	user_system_create();

@@ -44,6 +44,7 @@ void Controler::run() {
 			}
 			ev3_led_set_color(LED_ORANGE);
 			break;
+#if 0
 		case WALKING:
 			msg_f("running...", 1);
 			if (rStart()) {
@@ -60,6 +61,12 @@ void Controler::run() {
 		case TRACE:
 			mTracer->run(TARGET,1);
 			if(mDistanceDetection->left(15300)) {
+				mState = STOP;
+			}
+			break;
+#endif
+		case WALKING:
+			if ( lBasic() ) {
 				mState = STOP;
 			}
 			break;
@@ -85,6 +92,7 @@ bool Controler::lBasic() {
 			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(4000)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
+				mDistanceDetection->reset();
 				flag = 1;
 				return false;
 			}
@@ -93,6 +101,7 @@ bool Controler::lBasic() {
 			msg_f("running...", 1);		
 			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(1600)) {
+				mDistanceDetection->reset();
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 2;
 				return false;
@@ -102,6 +111,7 @@ bool Controler::lBasic() {
 			msg_f("running...", 1);		
 			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(1500)) {
+				mDistanceDetection->reset();
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 3;
 				return false;
@@ -111,6 +121,7 @@ bool Controler::lBasic() {
 			msg_f("running...", 1);		
 			mTracer->run(TARGET, 0);
 			if (mDistanceDetection->left(2240)) {
+				mDistanceDetection->reset();
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 4;
 				return false;
@@ -120,6 +131,7 @@ bool Controler::lBasic() {
 			msg_f("running...", 1);		
 			mTracer->NLT(20,10);
 			if (mDistanceDetection->left(50)) {
+				mDistanceDetection->reset();
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 5;
 				return false;
@@ -155,7 +167,7 @@ bool Controler::rStart(void) {
 			break;
 		case 1:
 			mTracer->NLT(10, -10);
-			if (mDistanceDetection->right(130)) {
+			if (mDistanceDetection->right(125)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 0;
 				return true;
@@ -165,11 +177,15 @@ bool Controler::rStart(void) {
 	return false;
 }
 
+/*
+ * rSortThrough
+ * ブロック並べエリアを無視する
+ */ 
 bool Controler::rSortThrough(void){
 	switch(flag) {
 		case 0:
 			mTracer->NLT(10,10);
-			if (mColorJudge->judgeBLACK()) {
+			if (mColorJudge->judgeBlack()) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mTimeDetection->reset();
 				flag = 1;

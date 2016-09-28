@@ -11,12 +11,12 @@ class ColorJudge {
 	public:
 	explicit ColorJudge(const ColorSensor& colorSensor);
 	int isColor();
-	bool judgeBLACK();
-	bool judgeGray();
+	bool judgeBlack();
+	bool judgeYellow();
 	
 private:
 	const ColorSensor& mColorSensor;		
-	rgb_raw_t* rgb;
+	rgb_raw_t* rgb = {0};
 	char str1[128]={0};
 };
 

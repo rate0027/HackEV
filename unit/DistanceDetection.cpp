@@ -16,12 +16,14 @@ bool DistanceDetection::left(int dist) {
 	float count = (float)(mLeftWheel.getCount());
 	if (dist > 0) {
 		if (count >= dist ) {
+			mLeftWheel.setCount(0);
 			return true;
 		} else {
 			return false;
 		}
 	} else {
 		if (count <= dist ) {
+			mLeftWheel.setCount(0);
 			return true;
 		} else {
 			return false;
@@ -34,12 +36,14 @@ bool DistanceDetection::right(int dist) {
 	float count = (float)(mRightWheel.getCount());
 	if (dist > 0) {
 		if (count >= dist ) {
+			mRightWheel.setCount(0);
 			return true;
 		} else {
 			return false;
 		}
 	} else {
 		if (count <= dist ) {
+			mRightWheel.setCount(0);
 			return true;
 		} else {
 			return false;
@@ -50,6 +54,6 @@ bool DistanceDetection::right(int dist) {
 
 
 void DistanceDetection::reset() {
-	mLeftWheel.reset();
-	mRightWheel.reset();
+	mLeftWheel.setCount(0);
+	mRightWheel.setCount(0);
 }

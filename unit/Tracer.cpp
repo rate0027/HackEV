@@ -110,7 +110,6 @@ void Tracer::runL(int target) {
     mLeftWheel.setPWM(ipwmL);
     mRightWheel.setPWM(ipwmR);
 //    mTailWheel.setPWM(turn*3);
-
     
 }
 

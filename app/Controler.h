@@ -39,8 +39,10 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
+#if 0
 		THROUGH,
 		TRACE,
+#endif
 		STOP
 	};
 	
