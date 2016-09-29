@@ -64,6 +64,7 @@ private:
 	bool lBasic(void);
 	bool rStart(void);
 	bool rSortThrough(void);
+	bool rBasic(void);
 };
 
 

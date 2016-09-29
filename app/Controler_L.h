@@ -10,7 +10,6 @@
 #include "DistanceDetection.h"
 #include "ColorJudge.h"
 #include "util.h"
-#include "Clock.h"
 
 
 /* クラスの宣言 */
@@ -30,7 +29,6 @@ public:
 	void init();
 	void terminate();
 	void run();
-	void L_course();
 
 
 /* 内部だけで動かす部分を記述 */
@@ -49,20 +47,28 @@ private:
 		STEP9,
 		STEP10,
 		STEP11,
-		OBJECT_DETECTION,
-		TRAIN_WAIT,
-		TRACE,
+        STEP12,
+        STEP13,
+        STEP14,
+        STEP15,
+        STEP16,
+        STEP17,
+        STEP18,
+        STEP19,
+        STEP20,
+        STEP21,
+        STEP22,
+        STEP23,
+        STEP24,
+        STEP25,
+        STEP26,
+        STEP27,
+        STEP28,
+        STEPC0,
+        STEPUP,
 		STOP
 	};
 	
-	enum LState {
-    step1,
-		step2,
-		step3
-	};
-
-	Clock clock;
-
 	Tracer* mTracer;
   Ar* mAr;
 	Prelude* mPrelude;
@@ -72,9 +78,9 @@ private:
 	DistanceDetection* mDistanceDetection;
 	ColorJudge* mColorJudge;
 	State mState;
-	LState mLState;
 	int TARGET = 0;
 	int star = 0;
+    int color1 = 0;
 
 };
 
