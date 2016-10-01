@@ -72,7 +72,7 @@ void Tracer::run(int target, int edge, int ipwmR, int ipwmL) {
 
 
 void Tracer::runS(int target, int edge, int ipwmR, int ipwmL) {
-	const float Kp = 0.2; /* 0.63 */
+	const float Kp = 0.15; /* 0.63 */
 	const float Ki = 0.05;
 	const float Kd = 0.08; /*0.125*/
 	const int bias = 0;

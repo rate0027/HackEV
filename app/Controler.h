@@ -39,8 +39,8 @@ private:
 		UNDEFINED,
 		WAITING_FOR_START,
 		WALKING,
-#if 0
 		THROUGH,
+#if 0
 		TRACE,
 #endif
 		STOP
@@ -65,6 +65,7 @@ private:
 	bool rStart(void);
 	bool rSortThrough(void);
 	bool rBasic(void);
+	bool thr_bl(void);
 };
 
 

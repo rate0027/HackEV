@@ -54,21 +54,22 @@ void Controler::run() {
 		case THROUGH:
 			msg_f("running...", 1);
 			if (rSortThrough()) {
-				mDistanceDetection->reset();
 			  mState = TRACE;
 			}
 			break;
 		case TRACE:
-			mTracer->run(TARGET,1);
-			if(mDistanceDetection->left(15300)) {
+			if ( rBasic() ) {
 				mState = STOP;
 			}
 			break;
 #endif
 		case WALKING:
-			if ( rBasic() ) {
-				mState = STOP;
+			if (thr_bl() ){
+				mState = THROUGH;
 			}
+			break;
+		case THROUGH:
+			mTracer->run(TARGET, 1, 10,10);
 			break;
 		case STOP:
 			msg_f("STOP", 1);
@@ -77,7 +78,6 @@ void Controler::run() {
     default:
   		break;
 	}
-	
 }
 
 /*
@@ -89,7 +89,7 @@ bool Controler::lBasic() {
 	switch(flag) {
 		case 0:
 			msg_f("running...", 1);		
-			mTracer->run(TARGET, 0, 30);
+			mTracer->run(TARGET, 0, 30, 30);
 			if (mDistanceDetection->left(3900)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 1;
@@ -98,7 +98,7 @@ bool Controler::lBasic() {
 			break;
 		case 1: //カーブ
 			msg_f("running...", 1);		
-			mTracer->run(TARGET, 0, 15);
+			mTracer->run(TARGET, 0, 15, 15);
 			if (mDistanceDetection->left(1600)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 2;
@@ -107,7 +107,7 @@ bool Controler::lBasic() {
 			break;
 		case 2: //直線 
 			msg_f("running...", 1);		
-			mTracer->run(TARGET, 0, 30);
+			mTracer->run(TARGET, 0, 30, 30);
 			if (mDistanceDetection->left(1500)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 3;
@@ -116,7 +116,7 @@ bool Controler::lBasic() {
 			break;
 		case 3: //カーブからラインチェンジ直前まで
 			msg_f("running...", 1);		
-			mTracer->run(TARGET, 0, 16);
+			mTracer->run(TARGET, 0, 16, 16);
 			if (mDistanceDetection->left(2240)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 4;
@@ -134,7 +134,7 @@ bool Controler::lBasic() {
 			break;
 		case 5: //ライン復帰
 			msg_f("running...", 1);		
-			mTracer->run(TARGET, 0, 18);
+			mTracer->run(TARGET, 0, 18, 18);
 			if (mDistanceDetection->left(1500)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 0;
@@ -152,17 +152,17 @@ bool Controler::lBasic() {
 bool Controler::rStart(void) {
 	switch(flag) {
 		case 0:
-			mTracer->run(TARGET, 1, 13);
+			mTracer->run(TARGET, 1, 13, 13);
 			if (mDistanceDetection->left(700)) {
-				ev3_speaker_play_tone(NOTE_D5, 10);
 				mDistanceDetection->reset();
+				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 1;
 				return false;
 			}
 			break;
 		case 1:
 			mTracer->NLT(10, -10);
-			if (mDistanceDetection->right(125)) {
+			if (mDistanceDetection->right(128)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 0;
 				return true;
@@ -179,7 +179,7 @@ bool Controler::rStart(void) {
 bool Controler::rSortThrough(void){
 	switch(flag) {
 		case 0:
-			mTracer->NLT(10,10);
+			mTracer->NLT(15,15);
 			if (mColorJudge->judgeBlack()) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				mTimeDetection->reset();
@@ -214,60 +214,127 @@ bool Controler::rSortThrough(void){
 bool Controler::rBasic(void) {
 	switch(flag){
 		case 0:
-			mTracer->run(TARGET, 1, 40);
-			if(mDistanceDetection->left(1500)) {
+			mTracer->run(TARGET, 1, 30,30);
+			if(mDistanceDetection->left(1400)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 1;
 				return false;
 			}
 			break;
 		case 1:
-			mTracer->run(TARGET, 1, 20);
-			if (mDistanceDetection->left(800)) {
+			mTracer->run(TARGET, 1, 20,20);
+			if (mDistanceDetection->left(850)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 2;
 				return false;
 			}
 			break;
 		case 2:
-			mTracer->run(TARGET, 1, 30);
-			if (mDistanceDetection->left(2000)) {
+			mTracer->runS(TARGET, 1, 30,30);
+			if (mDistanceDetection->left(1800)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 3;
 				return false;
 			}
 			break;
 		case 3:
-			mTracer->run(TARGET, 1, 15);
-			if (mDistanceDetection->left(1000)) {
+			mTracer->run(TARGET, 1, 15,15);
+			if (mDistanceDetection->left(1050)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 4;
 				return false;
 			}
 			break;
 		case 4: 
-			mTracer->run(TARGET, 1, 20);
-			if (mDistanceDetection->left(2000)) {
+			mTracer->runS(TARGET, 1, 30,30);
+			if (mDistanceDetection->left(1800)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 5;
 				return false;
 			}
 			break;
 		case 5:
-			mTracer->run(TARGET, 1, 12);
-			if (mDistanceDetection->left(1200)) {
+			mTracer->run(TARGET, 1, 15,15);
+			if (mDistanceDetection->left(1250)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 6;
 				return false;
 			}
 			break;
-		case 6:
-			mTracer->run(TARGET, 1, 17);
+		case 6: 
+			mTracer->run(TARGET, 1, 30,30);
+			if (mDistanceDetection->left(2800)) {
+				ev3_speaker_play_tone(NOTE_D5, 20);
+				flag = 7;
+				return false;
+			}
+			break;
+		case 7:
+			mTracer->run(TARGET, 1, 12,12);
+			if (mDistanceDetection->left(800)) {
+				ev3_speaker_play_tone(NOTE_D5, 20);
+				flag = 8;
+				return false;
+			}
+			break;
+		case 8:
+			mTracer->runS(TARGET, 1, 40,40);
 			if (mColorJudge->isColorRGB() != 0) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 0;
 				return true;
 			}
 			break;
+	}
+}
+
+bool Controler::thr_bl(void) {
+
+  switch(flag) {	
+	case 0: //避けるために後ろに下がる
+		mTracer->NLT(-15,-15);
+		if (mDistanceDetection->left(-230)) {
+			mDistanceDetection->reset();
+			flag = 1;
+			return false;
+		}	
+		break;
+	case 1: 
+		mTracer->NLT(18, -18);
+		if (mDistanceDetection->right(100)) { 
+			mTimeDetection->reset();
+			flag = 2;
+			return false;
+		}
+		break;
+	case 2:
+	 mTracer->NLT(15, 26); //10 18	
+	 if (mTimeDetection->isOver(3000) ) {
+		 flag = 3;
+		 return false;
+	 }
+	 break;
+	case 3:
+	 mTracer->NLT(10, 18);	
+	 if (mColorJudge->judgeBlack() ) {
+			mDistanceDetection->reset();
+		 flag = 4;
+		 return false;
+	 }
+	 break;
+	case 4: 
+		mTracer->NLT(8, -10);
+		if (mDistanceDetection->left(-30)) {
+			flag = 5;
+			return false;
+		}
+		break;
+	case 5: 
+		mTracer->NLT(10, 0);
+		if (mDistanceDetection->right(70)) {
+			flag = 0;
+			return true;
+		}
+		break;
 	}
 }
