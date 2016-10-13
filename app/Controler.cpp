@@ -44,7 +44,6 @@ void Controler::run() {
 			}
 			ev3_led_set_color(LED_ORANGE);
 			break;
-#if 0
 		case WALKING:
 			msg_f("running...", 1);
 			if (rStart()) {
@@ -62,15 +61,11 @@ void Controler::run() {
 				mState = STOP;
 			}
 			break;
-#endif
+#if 0
 		case WALKING:
-			if (thr_bl() ){
-				mState = THROUGH;
-			}
+			mColorJudge->isColorRGB();
 			break;
-		case THROUGH:
-			mTracer->run(TARGET, 1, 10,10);
-			break;
+#endif
 		case STOP:
 			msg_f("STOP", 1);
       mTracer->terminate();
@@ -162,7 +157,7 @@ bool Controler::rStart(void) {
 			break;
 		case 1:
 			mTracer->NLT(10, -10);
-			if (mDistanceDetection->right(128)) {
+			if (mDistanceDetection->right(137)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
 				flag = 0;
 				return true;
@@ -230,8 +225,8 @@ bool Controler::rBasic(void) {
 			}
 			break;
 		case 2:
-			mTracer->runS(TARGET, 1, 30,30);
-			if (mDistanceDetection->left(1800)) {
+			mTracer->run(TARGET, 1, 30,30);
+			if (mDistanceDetection->left(1700)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 3;
 				return false;
@@ -246,7 +241,7 @@ bool Controler::rBasic(void) {
 			}
 			break;
 		case 4: 
-			mTracer->runS(TARGET, 1, 30,30);
+			mTracer->run(TARGET, 1, 30,30);
 			if (mDistanceDetection->left(1800)) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 5;
@@ -278,7 +273,7 @@ bool Controler::rBasic(void) {
 			}
 			break;
 		case 8:
-			mTracer->runS(TARGET, 1, 40,40);
+			mTracer->run(TARGET, 1, 40,40);
 			if (mColorJudge->isColorRGB() != 0) {
 				ev3_speaker_play_tone(NOTE_D5, 20);
 				flag = 0;

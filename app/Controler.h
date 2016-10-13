@@ -40,9 +40,7 @@ private:
 		WAITING_FOR_START,
 		WALKING,
 		THROUGH,
-#if 0
 		TRACE,
-#endif
 		STOP
 	};
 	
