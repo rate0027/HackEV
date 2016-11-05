@@ -41,8 +41,8 @@ void Controler::run() {
 		case WAITING_FOR_START:	
 			msg_f("waiting", 1);		
  			if (mPrelude->isPressed()) {
-				//mState = WALKING;
-                mState = STEP7;
+				mState = WALKING;
+        //mState = STEP7;
 			}
 			ev3_led_set_color(LED_ORANGE);
             mTimeDetection->reset();
@@ -99,7 +99,7 @@ void Controler::run() {
 		case STEP7: //星取りまで
 			msg_f("running...", 1);		
 			mTracer->run(TARGET,0,15,15);
-			if ((star =  (mColorJudge->isColor())) > 0) {
+			if ((star =  (mColorJudge->isColorRGB())) > 0) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
                 mTimeDetection->reset();
 				mDistanceDetection->reset();
@@ -107,7 +107,7 @@ void Controler::run() {
 			}
 			break;
 		case STEP8: //バック
-            msg_f("running...", 1);
+						msg_f("running...", 1);
             mTracer->NLT(0,0);
             if (mTimeDetection->isOver(500)) {
                 ev3_speaker_play_tone(NOTE_D5, 10);
@@ -118,7 +118,7 @@ void Controler::run() {
 		case STEP9: //若干停止
             msg_f("running...", 1);
             mTracer->NLT(20,-19);
-            if (mDistanceDetection->right(140)) {
+            if (mDistanceDetection->right(200)) {
                 ev3_speaker_play_tone(NOTE_D5, 10);
                 mDistanceDetection->reset();
 				mState = STEP10;
@@ -134,11 +134,11 @@ void Controler::run() {
 			break;
 		case STEP11: //相撲の前まで移動
 			msg_f("running...", 1);		
-			mTracer->run(TARGET,0,15,15);
+			mTracer->run(TARGET,1,15,15);
 			if (mDistanceDetection->left(1650)) {
 				ev3_speaker_play_tone(NOTE_D5, 10);
                 mTimeDetection->reset();
-				mState = STEP12;
+				mState = STOP;
 			}
 			break;
         case STEP12: //ちょっと休憩

@@ -40,10 +40,11 @@ void Controler::run() {
 		case WAITING_FOR_START:	
 			msg_f("waiting", 1);		
  			if (mPrelude->isPressed()) {
-				mState = WALKING;
+				mState = STEP1;
 			}
 			ev3_led_set_color(LED_ORANGE);
 			break;
+#if 0
 		case WALKING:
 			msg_f("running...", 1);
 			if (rStart()) {
@@ -61,11 +62,60 @@ void Controler::run() {
 				mState = STOP;
 			}
 			break;
-#if 0
-		case WALKING:
-			mColorJudge->isColorRGB();
-			break;
 #endif
+/*-------- 懸賞 --------*/
+		case STEP1:
+			msg_f("Running...", 1);
+			mTracer->run(TARGET,0,15,15);
+			if (mObjectDetection->isObject(10) ) {
+				mState = STEP2;
+			}
+			break;
+		case STEP2:
+			mTracer->NLT(0,0);
+			if (mAr->armDown(-17)) {
+				mState = STEP3;
+				mDistanceDetection->reset();
+			}
+			break;
+		case STEP3:
+			mTracer->NLT(10,10);
+			if (mDistanceDetection->left(200) ) {
+				mState = STEP4;
+			}
+			break;
+		case STEP4:
+			mTracer->NLT(0,0);
+			if (mAr->armUp(60)) {
+				mState = STEP5;
+				mDistanceDetection->reset();
+			}
+			break;
+		case STEP5:
+			mTracer->NLT(10,-10);
+			if (mDistanceDetection->left(-160)) {
+				mState = STEP6;
+			}
+			break;
+		case STEP6:
+			mTracer->NLT(10,10);
+			if (mDistanceDetection->left(600)) {
+				mState = STEP7;
+			}
+			break;
+		case STEP7:
+			mTracer->NLT(10,-10);
+			if (mDistanceDetection->left(-73)) {
+				mState = STEP8;
+			}
+			break;
+		case STEP8:
+			mTracer->NLT(15,15);
+			if (mDistanceDetection->left(4200)) {
+				mState = STOP;
+			}
+			break;
+/*------------------------------*/
 		case STOP:
 			msg_f("STOP", 1);
       mTracer->terminate();

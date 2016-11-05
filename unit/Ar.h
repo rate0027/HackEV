@@ -8,8 +8,8 @@ using namespace ev3api;
 class Ar {
 public:
 explicit Ar(Motor& arm);
-bool armUp();
-bool armDown();
+bool armUp(int);
+bool armDown(int);
 void reset();
 int32_t u = 0;
 int32_t v = 0;

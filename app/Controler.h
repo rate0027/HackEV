@@ -38,9 +38,19 @@ private:
 	enum State{
 		UNDEFINED,
 		WAITING_FOR_START,
+#if 0
 		WALKING,
 		THROUGH,
 		TRACE,
+#endif
+		STEP1,
+		STEP2,
+		STEP3,
+		STEP4,
+		STEP5,
+		STEP6,
+		STEP7,
+		STEP8,
 		STOP
 	};
 	
