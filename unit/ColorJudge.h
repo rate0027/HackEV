@@ -11,7 +11,7 @@ class ColorJudge {
 	public:
 	explicit ColorJudge(const ColorSensor& colorSensor);
 	int isColor();
-	bool judgeBlack();
+	int judgeBlack();
 	int isColorRGB();	
 private:
 	const ColorSensor& mColorSensor;		
