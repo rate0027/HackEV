@@ -1,5 +1,6 @@
 #include "ColorJudge.h"
 
+
 ColorJudge::ColorJudge(const ColorSensor& colorSensor)
 	: mColorSensor(colorSensor) {
 }

@@ -2,6 +2,7 @@
 Ar::Ar(Motor& arm)
 : mArm(arm){
 }
+
 bool Ar::armUp() {
     mArm.setPWM(30);
     float u = (float)(mArm.getCount());
