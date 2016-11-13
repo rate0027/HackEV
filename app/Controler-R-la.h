@@ -43,26 +43,35 @@ private:
 		POS_1,
 		POS_2,
 		POS_3,
-        CALC,
-        MOVE_R,
-        MOVE_BL,
-        MOVE_CALC,
-        BLOCK_SERCH,
+		MOVE0,
+		MOVE1,
+		MOVE2,
+		MOVE3,
+		MOVE4,
+		MOVE5,
+		MOVE6,
+		MOVE7,
+		MOVE8,
+		MOVE9,
+		MOVE10,
+		MOVE11,
+		MOVE12,
+		MOVE13,
+		MOVE14,
+		MOVE15,
+		MOVE16,
+		MOVE17,														
 		DIRECT_R,
 		DIRECT_L,
 		BLOCK_CHECK,
-        BLOCK_RESULT,
 		THROUGH,
 		TRACE,
-        CH_R,
-        CH_L,
-        TRACE_R,
-        TRACE_F,
-        THROUGH_BLOCK,
-        POSITHON_RUN,
 		EXIT,
 		START,
 		SET,
+#if 0
+		TRACE,
+#endif
 		STOP
 	};
 	
@@ -77,47 +86,29 @@ private:
 	DistanceDetection* mDistanceDetection;
 	ColorJudge* mColorJudge;
 	State mState;
-    
-    
 	int TARGET = 0;
-    int flag = 0;
-    int count = 0;
-    int Color;
-    int i;
-    int exitCount = 0;
-    int blCheck = 0;
-    int blColor = 0; //when robot move x-direction is true
-    char test[];
-    /* now Robot Point and ditection */
-    int x = 1, y = 2, z = 1;
-    
-    
-    /****************************/
-    /* block set point          */
-    /* 確認するときはX{x,0},Y{y,1}*/
-    /***************************/
-    int xy[4][2] = {  {3, 3},
-                    {1, 2},
-                    {2, 3},
-                    {2, 1} };
-    
-    int p = 0;
-    
-    /* robot move distance (1 direction!) */
-    int distance = 0;
+	int flag=0;
+	int count = 0;
+	int sCount = 0;		//こっから
+	int check = 0;
+	int Color;
+	int flag_ch =0;
 	
+	
+	bool lBasic(void);
 	bool rStart(void);
 	bool rSET(void);
+	bool rBasic(void);
 	bool rSortThrough(void);
 	bool rCorse(void);
-    bool pos_run(int);
-    bool thr_bl(void);
+	bool thr_bl(void);
+	bool pos_run(int);					//こっから足したとこ
 	bool bl_ch(void);
+	bool rEXIT(void);
 	bool ch_dirL(void);
 	bool ch_dirR(void);
-    bool rEXIT(void);
-    bool rBasic(void);
-
+	int pos_X(int);
+	
 };
 
 
