@@ -1,6 +1,8 @@
 #include "Controler.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+
 /* コンストラクタ */
 Controler::Controler(Tracer* tracer,
                      Ar* ar,
@@ -33,7 +35,6 @@ void Controler::terminate() {
 /* runメソッド: 状態に応じて動作させる */
 void Controler::run() {
     switch(mState) {
-            
         case UNDEFINED:
             if( (TARGET = mPrelude->calibration()) > 0 ) {
                 mState = WAITING_FOR_START;
@@ -91,11 +92,6 @@ void Controler::run() {
                 mState = CALC;
             }
             break;
-            
-            
-            
-            
-            
             
             /********************************/
             /*      R_Course_Move_Code      */
@@ -155,106 +151,102 @@ void Controler::run() {
             }
             
             break;
-
-            
             
             /* 座標計算と向きの変更ステートに移行するステート */
             /* 向きは良いんだけどdintance == 0のときループが？ */
-        case CALC:
-            ev3_speaker_play_tone(NOTE_D5, 20);
-            msg_f("Calc Start",1);
-            if (z==1) {
-                if(distance == 0){
-                    distance = xy[p][0] - x;
-                    if (distance == 0) {
-                        mState = BLOCK_CHECK;
-                        break;
-                    }
-                }
-                
-                if (distance > 0) {
-                    mState = CH_R;
-                    break;
-                }else if(distance < 0){
-                    distance = abs(distance);
-                    mState = CH_L;
-                    break;
-                }
-            }else if(z==2){
-                if(distance == 0){
-                    distance = xy[p][1] - y;
-                    if (distance == 0) {
-                        mState = BLOCK_CHECK;
-                        break;
-                    }
+				case CALC:
+						ev3_speaker_play_tone(NOTE_D5, 20);
+						msg_f("Calc Start",1);
+						if (z==1) {
+							if(distance == 0){
+								distance = xy[p][0] - x;
+								if (distance == 0) {
+									mState = BLOCK_CHECK;
+									break;
+								}
+							}
 
-                }
-                
-                if (distance > 0) {
-                    mState = CH_R;
-                    break;
-                }else if(distance < 0){
-                    distance = abs(distance);
-                    mState = CH_L;
-                    break;
-                }
-            }else if(z==3){
-                if(distance == 0){
-                    distance = xy[p][1] - x;
-                    if (distance == 0) {
-                        mState = BLOCK_CHECK;
-                        break;
-                    }
-                }
-                
-                if (distance > 0) {
-                    mState = CH_L;
-                    break;
-                }else if(distance < 0){
-                    distance = abs(distance);
-                    mState = CH_R;
-                    break;
-                }
-            }else{
-                if(distance == 0){
-                    distance = xy[p][1] - y;
-                    if (distance == 0) {
-                        mState = BLOCK_CHECK;
-                        break;
-                    }
-                }
+							if (distance > 0) {
+								mState = CH_R;
+								break;
+							}else if(distance < 0){
+								distance = abs(distance);
+								mState = CH_L;
+								break;
+							}
+						}else if(z==2){
+							if(distance == 0){
+								distance = xy[p][1] - y;
+								if (distance == 0) {
+									mState = BLOCK_CHECK;
+									break;
+								}
 
-                
-                
-                if (distance > 0) {
-                    mState = CH_L;
-                    break;
-                }else if(distance < 0){
-                    distance = abs(distance);
-                    mState = CH_R;
-                    break;
-                }
-            }
-            
-            ev3_speaker_play_tone(NOTE_D5, 20);
-            break;
-            
-            
-        case BLOCK_SERCH:
-            for (i=0; i<3; i++) {
-                if (x == xy[i][0] && y == xy[i][1]) {
-                    mState = CH_L;//THROUGH_BLOCK;
-                    break;
-                }else{
-                    mState = POSITHON_RUN;
-                    break;
-                }
-            }
-            break;
-            
-            /*  MOVE_Rの動作をするステート,すべてMOVE_Rに還る.  */
-            
-            /*  右に90曲がるステート  */
+							}
+
+							if (distance > 0) {
+								mState = CH_R;
+								break;
+							}else if(distance < 0){
+								distance = abs(distance);
+								mState = CH_L;
+								break;
+							}
+						}else if(z==3){
+							if(distance == 0){
+								distance = xy[p][1] - x;
+								if (distance == 0) {
+									mState = BLOCK_CHECK;
+									break;
+								}
+							}
+
+							if (distance > 0) {
+								mState = CH_L;
+								break;
+							}else if(distance < 0){
+								distance = abs(distance);
+								mState = CH_R;
+								break;
+							}
+						}else{
+							if(distance == 0){
+								distance = xy[p][1] - y;
+								if (distance == 0) {
+									mState = BLOCK_CHECK;
+									break;
+								}
+							}
+
+							if (distance > 0) {
+								mState = CH_L;
+								break;
+							}else if(distance < 0){
+								distance = abs(distance);
+								mState = CH_R;
+								break;
+							}
+						}
+
+						ev3_speaker_play_tone(NOTE_D5, 20);
+						break;
+
+
+				case BLOCK_SERCH:
+						for (i=0; i<3; i++) {
+							if (x == xy[i][0] && y == xy[i][1]) {
+								mState = CH_L;//THROUGH_BLOCK;
+								break;
+							}else{
+								mState = POSITHON_RUN;
+								break;
+							}
+						}
+						break;
+
+						/*  MOVE_Rの動作をするステート,すべてMOVE_Rに還る.  */
+
+						/*  右に90曲がるステート  */
         case CH_R:
             msg_f("Direct_C_R",3);
             if (ch_dirR() == true) {
@@ -305,7 +297,7 @@ void Controler::run() {
         case BLOCK_CHECK:
             msg_f("Block_Check",3);
             if (bl_ch()) {
-                mState = BLOCK_RESULT;
+							mState = STOP;
                 break;
             }
             break;
@@ -493,20 +485,20 @@ bool Controler::rEXIT(void){
             mTracer->NLT(10, 10);
             if (mDistanceDetection->left(105)) {
                 ev3_speaker_play_tone(NOTE_D5, 10);
-                flag = 3;
-            }
-            break;
-            
-        case 3:
-            mTracer->NLT(-10, 10);
-            if (mDistanceDetection->left(135)) {
-                ev3_speaker_play_tone(NOTE_D5, 10);
-                flag = 0;
-                return true;
-            }
-            break;
-    }
-    return false;
+								flag = 3;
+						}
+						break;
+
+				case 3:
+						mTracer->NLT(-10, 10);
+						if (mDistanceDetection->left(135)) {
+							ev3_speaker_play_tone(NOTE_D5, 10);
+							flag = 0;
+							return true;
+						}
+						break;
+		}
+		return false;
 }
 
 /*  Rコース難所まで移動する  */
@@ -690,7 +682,7 @@ bool Controler::bl_ch(void){
             }
             break;
         case 1:
-            if(mAr->armUp()){
+            if(mAr->armUp(55)){
                 msg_f("ArmUp",1);
                 mAr->reset();
                 flag = 2;
@@ -702,8 +694,7 @@ bool Controler::bl_ch(void){
             mTracer->NLT(10,10);
             msg_f("Foward_and_Judge",1);
             
-            if(mColorJudge->isColorRGB() != 0){
-                blColor = mColorJudge->isColor();
+            if((blColor = mColorJudge->isColor()) != 0){
                 mDistanceDetection->reset();
                 flag = 4;
                 return false;
@@ -749,7 +740,7 @@ bool Controler::bl_ch(void){
             }
             break;
         case 5:
-            if(mAr->armDown() == true){
+            if(mAr->armDown(55)){
                 mAr->reset();
                 msg_f("DOWN",1);
                 flag = 0;

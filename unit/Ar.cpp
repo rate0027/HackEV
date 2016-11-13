@@ -2,10 +2,10 @@
 Ar::Ar(Motor& arm)
 : mArm(arm){
 }
-bool Ar::armUp() {
+bool Ar::armUp(int upCount) {
     mArm.setPWM(30);
     float u = (float)(mArm.getCount());
-    if(u >= 40){
+    if(u >= upCount){
         return(true);
         u = 0;
     }else{
@@ -13,12 +13,12 @@ bool Ar::armUp() {
     }
 }
 
-bool Ar::armDown() {
+bool Ar::armDown(int downCount) {
     mArm.setPWM(-30);
-    float v = (float)(mArm.getCount());
-    if(v <= -40){
+    float u = (float)(mArm.getCount());
+    if(u <= (downCount * -1)){
         return(true);
-            v = 0;
+            u = 0;
     }else{
         return(false);
     }

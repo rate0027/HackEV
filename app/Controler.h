@@ -63,9 +63,6 @@ private:
 		EXIT,
 		START,
 		SET,
-#if 0
-		TRACE,
-#endif
 		STOP
 	};
 	
@@ -99,7 +96,7 @@ private:
     /* block set point          */
     /* 確認するときはX{x,0},Y{y,1}*/
     /***************************/
-    int xy[4][2] = {  {3, 2},
+    int xy[4][2] = {  {3, 3},
                     {1, 2},
                     {2, 3},
                     {2, 1} };
