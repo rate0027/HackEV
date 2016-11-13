@@ -5,13 +5,14 @@
 #include "util.h"
 #include "stdlib.h"
 
+
 using namespace ev3api;
 
 class ColorJudge {
 	public:
 	explicit ColorJudge(const ColorSensor& colorSensor);
 	int isColor();
-	bool judgeBlack();
+	int judgeBlack();
 	int isColorRGB();	
 private:
 	const ColorSensor& mColorSensor;		
