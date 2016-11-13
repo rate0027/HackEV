@@ -13,11 +13,11 @@ int ColorJudge::isColor() {
 	}
 }
 
-bool ColorJudge::judgeBlack() {
+int ColorJudge::judgeBlack() {
 	if(  mColorSensor.getColorNumber() == 1){
-		return(true);
+		return(1);
 	}else{
-		return(false);
+		return(0);
 	}
 }
 
